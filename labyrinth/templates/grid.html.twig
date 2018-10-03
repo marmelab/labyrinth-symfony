@@ -1,13 +1,13 @@
 <div class="grid">
-    {{ dump(board) }}
-
+    {# {{ dump(board) }} #}
     {% for row in board %}
         <div class="grid-row">
-        {% for value in row %}
-                <div class="default-box">
-                    {{ value.type }}
-                </div>
-        {% endfor %}
+            {% for tile in row %}
+                {% include 'tile.html.twig' with {
+                    'tile' : tile
+                }
+                only %}
+            {% endfor %}
         </div>
     {% endfor %}
 </div>

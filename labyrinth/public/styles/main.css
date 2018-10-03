@@ -14,21 +14,10 @@ a {
     flex-direction: row;
 }
 
-.default-box {
-    padding: 4px;
-    margin: 2px;
-    height: 50px;
-    width: 50px;
-    text-align: center;
-    border-style: solid;
-    border-width: 4px;
-    border-color: white;
-    border-radius: 10px;
-}
-
 .grid {
-    padding: 5px;
-    border-radius: 10px;
+    width: 600px;
+    padding: 0px;
+    border-radius: 0px;
 }
 
 .board {
@@ -39,6 +28,19 @@ a {
     -webkit-box-align: center;
 
     align-items: center;
+}
+
+.tile-image {
+    width: 100%;
+}
+
+table {
+    font-size: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+td {
+    padding: 0;
 }
 
 span.top {

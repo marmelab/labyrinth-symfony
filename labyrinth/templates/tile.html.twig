@@ -1,0 +1,22 @@
+{% set matrix = tileTypeToMatrix(tile.type) %}
+{% set degres = tile.direction * 90 %}
+<table style="transform: rotate({{degres}}deg)">
+    {% for r in matrix %}
+        <tr>
+            {% for isWall in r %}
+                <td>
+                    {% if (isWall == 1) %}
+                        <img class="tile-image" src="{{ asset('images/bricks.png') }}"/>
+                    {% else %}
+                        <img class="tile-image" src="{{ asset('images/stones.png') }}"/>
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+{# {{ renderType(value) }} #}
+
+{# {{ value|tile }} #}
+{# {{ value.type }} #}
