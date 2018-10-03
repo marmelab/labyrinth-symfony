@@ -14,4 +14,13 @@ class GameController extends AbstractController
     {
         return $this->render('game.html.twig');
     }
+
+    public function getGrid() : array
+    {
+        $grid = array(
+            array("A","B","C"),
+            array("D","E","F"),
+        );
+        return $grid;
+    }
 }
