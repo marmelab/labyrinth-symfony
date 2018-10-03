@@ -11,6 +11,19 @@ services:
         working_dir: /app
         depends_on:
             - postgres
+            - api
+
+    api:
+        image: node:10-alpine
+        user: '${UID}:${GID}'
+        volumes:
+            - './labyrinth-api:/app'
+        ports:
+            - '3000:3000'
+        command: 'node server/index.js'
+        environment:
+            - HOME=/app/var/cache
+        working_dir: /app
 
     postgres:
         image: postgres:9.6

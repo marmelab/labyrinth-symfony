@@ -15,11 +15,11 @@ class GameExtension extends AbstractExtension
 
     public function tileTypeToMatrix($tileType)
     {
-        if ($tileType == "┗") {
+        if ($tileType === "┗") {
             return [[1,0,1],[1,0,0],[1,1,1]];
-        } elseif ($tileType == "┻") {
+        } elseif ($tileType === "┻") {
             return [[1,0,1],[0,0,0],[1,1,1]];
-        } elseif ($tileType == "┃") {
+        } elseif ($tileType === "┃") {
             return [[1,0,1],[1,0,1],[1,0,1]];
         }
     }

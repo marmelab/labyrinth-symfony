@@ -11,7 +11,8 @@ help:
 composer-install: ## Run composer install within the host
 	$(DOCKER_COMPOSE) run --no-deps --rm \
 		php bash -ci 'bin/composer.phar install'
-
+	$(DOCKER_COMPOSE) run --no-deps --rm \
+		api bash -ci 'npm install'
 install: composer-install ## Install docker environnement
 
 start: run
