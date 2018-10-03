@@ -1,13 +1,11 @@
 <div class="grid">
-    {{ dump(grid) }}
+    {{ dump(board) }}
 
-    {% for row in grid %}
+    {% for row in board %}
         <div class="grid-row">
         {% for value in row %}
                 <div class="default-box">
-                    {% if (value != '.') %}
-                    {{ value }}
-                    {% endif %}
+                    {{ value.type }}
                 </div>
         {% endfor %}
         </div>

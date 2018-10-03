@@ -9,8 +9,7 @@
 <div class="board">
 <div>
     {% include 'grid.html.twig' with {
-        'name': game_name,
-        'grid': game_grid,
+        'board': game.board,
     } only %}
 </div>
 </div>

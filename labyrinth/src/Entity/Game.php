@@ -2,14 +2,24 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @ORM\Table
+ */
 class Game
 {
-    public function getGrid() : array
+    protected $board;
+
+    public function getBoard() : array
     {
-        $grid = array(
-            array("A","B","C"),
-            array("D","E","F"),
-        );
-        return $grid;
+        return $this->board;
+    }
+
+    public function setBoard(array $board) : Game
+    {
+        $this->board = $board;
+        return $this;
     }
 }
