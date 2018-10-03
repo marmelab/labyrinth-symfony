@@ -1,28 +1,27 @@
 <?php
-// tests/Controller/PostControllerTest.php
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PostControllerTest extends WebTestCase
+class GameControllerTest extends WebTestCase
 {
     public function testShowPost()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/hello');
+        $client->request('GET', '/game');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testHelloCrawler()
+    public function testGameCrawler()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/hello');
+        $crawler = $client->request('GET', '/game');
 
         $this->assertGreaterThan(
             0,
-            $crawler->filter('html:contains("Hello World")')->count()
+            $crawler->filter('html:contains("Labyrinth Game")')->count()
         );
 
         $this->assertGreaterThan(0, $crawler->filter('h1')->count());
