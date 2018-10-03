@@ -10,7 +10,7 @@ help:
 
 composer-install: ## Run composer install within the host
 	$(DOCKER_COMPOSE) run --no-deps --rm \
-		php bash -ci 'bin/composer install'
+		php bash -ci 'bin/composer.phar install'
 
 install: composer-install ## Install docker environnement
 
@@ -26,4 +26,4 @@ logs:
 	$(DOCKER_COMPOSE) logs -f
 
 test: ## Test the code
-	$(DOCKER_COMPOSE) run --no-deps --rm php bin/phpunit
+	$(DOCKER_COMPOSE) run --no-deps --rm php bin/phpunit tests

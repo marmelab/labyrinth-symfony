@@ -1,0 +1,14 @@
+# https://travis-ci.com/marmelab/labyrinth-symfony
+
+sudo: required
+
+services:
+    - docker
+
+install: make install
+
+script: make test
+
+branches:
+    only:
+        - master
