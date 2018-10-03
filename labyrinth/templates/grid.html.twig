@@ -1,0 +1,15 @@
+<div class="grid">
+    {{ dump(grid) }}
+
+    {% for row in grid %}
+        <div class="grid-row">
+        {% for value in row %}
+                <div class="default-box">
+                    {% if (value != '.') %}
+                    {{ value }}
+                    {% endif %}
+                </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+</div>

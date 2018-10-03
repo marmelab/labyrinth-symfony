@@ -6,4 +6,13 @@
 {% endblock %}
 
 {% block content %}
+<div class="board">
+<div>
+    {% include 'grid.html.twig' with {
+        'name': game_name,
+        'grid': game_grid,
+    } only %}
+</div>
+</div>
+
 {% endblock %}

@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome to Labyrinth Game!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/main.css') }}"/>
+        {% endblock %}    </head>
     <body>
         <section class="container">
         {% block header %}{% endblock %}

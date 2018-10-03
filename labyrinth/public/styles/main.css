@@ -1,0 +1,46 @@
+body {
+    font-family: Verdana, sans-serif, monospace;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: initial;
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.default-box {
+    padding: 4px;
+    margin: 2px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    border-style: solid;
+    border-width: 4px;
+    border-color: white;
+    border-radius: 10px;
+}
+
+.grid {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
+}
+
+span.top {
+    margin-top: 100px;
+}
