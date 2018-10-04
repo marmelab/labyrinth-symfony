@@ -32,6 +32,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # register custom services
-    game_manager:
-        class: App\Manager\GameManager
+    game_api:
+        class: App\Api\GameApi
         arguments: ['@csa_guzzle.client.api']

@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Manager;
+namespace App\Api;
 
 use Symfony\Component\HttpFoundation\Response;
 use GuzzleHttp\Client;
 use App\Entity\Game;
 
-class GameManager
+class GameApi
 {
-    private $httpClient;
+    private $client;
 
-    public function __construct(Client $httpClient)
+    public function __construct(Client $gameApiClient)
     {
-        $this->httpClient = $httpClient;
+        $this->client = $gameApiClient;
     }
 
     public function getGame() : Game
     {
-        $response = $this->httpClient->request('GET', '/game');
+        $response = $this->client->request('GET', '/game');
         $jsonGame = json_decode($response->getBody()->getContents(), true); // true to get an array
 
         $game = new Game();
