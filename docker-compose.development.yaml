@@ -6,3 +6,7 @@ services:
         ports:
             - 8000:8000
         env_file: ./labyrinth/.env
+
+    api:
+        ports:
+            - '3000:3000'

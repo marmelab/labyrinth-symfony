@@ -2,8 +2,7 @@ version: '3.2'
 
 services:
     php:
-        build: docker/php
-        volumes:
-            - ./labyrinth:/app
-        working_dir: /app
         env_file: ./labyrinth/.env.test
+
+    api:
+        command: 'node server/index.js'

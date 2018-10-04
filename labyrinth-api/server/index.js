@@ -2,12 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-// app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
-// Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
     console.log('ERROR: ' + reason);
     res.status(code || 500).json({ error: message });
@@ -111,4 +109,4 @@ app.get('/game', (req, res) => {
     return res.status(200).json(game);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
