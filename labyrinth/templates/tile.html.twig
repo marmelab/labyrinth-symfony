@@ -4,7 +4,7 @@
     {% for raw in matrix %}
         <tr>
             {% for isWall in raw %}
-                {% set source = asset('images/' ~ (isWall ? 'bricks' : 'stones') ~ '.png') %}
+                {% set source = asset('images/' ~ (isWall ? 'bricks32' : 'stones32') ~ '.png') %}
                 <td>
                     <img class="tile-image" src="{{source}}"/>
                 </td>
