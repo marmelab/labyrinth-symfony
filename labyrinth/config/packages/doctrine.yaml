@@ -9,6 +9,11 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
+        host: postgres
+        port: 5432
+        dbname: labyrinth
+        user: labyrinth
+        password: labyrinth
         server_version: '5.7'
         charset: utf8mb4
         default_table_options:

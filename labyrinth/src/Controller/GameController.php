@@ -8,15 +8,18 @@ use App\Manager\GameManager;
 
 class GameController extends AbstractController
 {
+    public function __construct(GameManager $gameManager)
+    {
+        $this->gameManager = $gameManager;
+    }
 
     /**
      * @Route("/game")
      */
-    public function index() // (GameManager $gameManager)
+    public function index()
     {
-        $gameManager = new GameManager();
         return $this->render('game.html.twig', [
-            'game' => $gameManager->getGame()
-         ]);
+            'game' => $this->gameManager->getGame()
+        ]);
     }
 }

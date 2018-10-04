@@ -2,10 +2,19 @@
 
 namespace App\Manager;
 
+use Symfony\Component\HttpFoundation\Response;
+use GuzzleHttp\Client;
 use App\Entity\Game;
 
 class GameManager
 {
+    private $httpClient;
+
+    public function __construct(Client $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
     public function getGame() : Game
     {
         $jsonGame = json_decode(
