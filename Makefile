@@ -2,7 +2,10 @@
 
 .DEFAULT_GOAL := help
 
-DOCKER_COMPOSE = docker-compose -p labyrinth-symfony
+APP_ENV ?= development
+
+DOCKER_COMPOSE = docker-compose -p labyrinth-symfony-${APP_ENV} -f docker-compose.yaml -f docker-compose.${APP_ENV}.yaml
+DOCKER_COMPOSE_TEST = docker-compose -p labyrinth-symfony-test -f docker-compose.yaml -f docker-compose.test.yaml
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -24,4 +27,4 @@ logs:
 	$(DOCKER_COMPOSE) logs -f
 
 test: ## Test the code
-	$(DOCKER_COMPOSE) run --no-deps --rm php bin/phpunit tests
+	$(DOCKER_COMPOSE_TEST) run --no-deps --rm php bin/phpunit tests

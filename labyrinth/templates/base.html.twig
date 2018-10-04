@@ -3,16 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>
-            {% block title 'Welcome to Labyrinth Game!' %}
-            </title>
-            {% block stylesheets %}
-                <link rel="stylesheet" href="{{ asset('styles/main.css') }}"/>
-            {% endblock %}
-        </head>
-        <body>
-            <section class="container">
-                {% block header '' %}
-                    {% block content %}{% endblock %}
-                </section>
-            </body>
-        </html>
+            {# {% block title 'Welcome to Labyrinth Game!' %} #}
+            {% block pageTitle %}Welcome to Labyrinth Game!{% endblock %}
+        </title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/main.css') }}"/>
+        {% endblock %}
+    </head>
+    <body>
+        <section class="container">
+            {# {% block header '' %} #}
+            {% block header %}{% endblock %}
+            {% block content %}{% endblock %}
+        </section>
+    </body>
+</html>
