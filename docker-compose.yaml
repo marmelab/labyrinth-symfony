@@ -20,7 +20,7 @@ services:
             - './labyrinth-api:/app'
         ports:
             - '3000:3000'
-        command: 'node server/index.js'
+        command: './node_modules/.bin/nodemon server/index.js'
         environment:
             - HOME=/app/var/cache
         working_dir: /app
