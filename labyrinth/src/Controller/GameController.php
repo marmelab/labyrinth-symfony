@@ -4,13 +4,15 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Manager\GameManager;
+use App\Api\GameApi;
 
 class GameController extends AbstractController
 {
-    public function __construct(GameManager $gameManager)
+    private $gameApi;
+
+    public function __construct(GameApi $gameApi)
     {
-        $this->gameManager = $gameManager;
+        $this->gameApi = $gameApi;
     }
 
     /**
@@ -19,7 +21,7 @@ class GameController extends AbstractController
     public function index()
     {
         return $this->render('game.html.twig', [
-            'game' => $this->gameManager->getGame()
+            'game' => $this->gameApi->getGame()
         ]);
     }
 }
