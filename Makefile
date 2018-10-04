@@ -7,16 +7,13 @@ DOCKER_COMPOSE = docker-compose -p labyrinth-symfony
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-
-composer-install: ## Run composer install within the host
+install: ## Install docker environnement
 	$(DOCKER_COMPOSE) run --no-deps --rm \
 		php bash -ci 'bin/composer.phar install'
 	$(DOCKER_COMPOSE) run --no-deps --rm \
 		api bash -ci 'npm install'
-install: composer-install ## Install docker environnement
 
 start: run
-
 run: ## Start the server
 	$(DOCKER_COMPOSE) up --force-recreate -d
 
