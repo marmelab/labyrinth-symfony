@@ -4,13 +4,13 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Api\GameApi;
+use App\Api\GameApiInterface;
 
 class GameController extends AbstractController
 {
     private $gameApi;
 
-    public function __construct(GameApi $gameApi)
+    public function __construct(GameApiInterface $gameApi)
     {
         $this->gameApi = $gameApi;
     }

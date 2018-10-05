@@ -32,6 +32,15 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # register custom services
+    # game_api:
+    #     class: '%game_api%'
+    #     arguments: ['@csa_guzzle.client.api']
+
+    # '%game_api%': ~
+    # App\Api\GameApiInterface: '@%game_api%'
+    # App\Api\GameApi: ~
+    # App\Api\GameApiInterface: '@App\Api\GameApi'
+
     game_api:
-        class: App\Api\GameApi
+        class: GameApiInterface
         arguments: ['@csa_guzzle.client.api']

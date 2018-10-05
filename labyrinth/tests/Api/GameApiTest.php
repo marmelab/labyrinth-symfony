@@ -15,7 +15,7 @@ class GameApiTest extends TestCase
 {
     public function testGetGame()
     {
-        $mockedResponse = file_get_contents(__DIR__ . '/../board-example.json');
+        $mockedResponse = file_get_contents(__DIR__ . '/../../data/board-example.json');
         $client = $this->createGuzzleHttpMockClient($mockedResponse, 200, ['Content-Type' => 'application/json']);
         $gameApi = new GameApi($client);
 

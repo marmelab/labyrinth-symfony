@@ -12,6 +12,11 @@ class Game
 {
     protected $board;
 
+    public function __construct(array $board)
+    {
+        $this->board = $board;
+    }
+
     public function getBoard() : array
     {
         return $this->board;

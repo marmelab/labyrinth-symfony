@@ -1,6 +1,0 @@
-csa_guzzle:
-    clients:
-        api:
-            config:
-                base_uri: '%env(API_BASE_URI)%'
-                timeout: 2.0

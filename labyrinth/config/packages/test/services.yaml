@@ -1,0 +1,6 @@
+parameters:
+    game_api: 'App\Api\GameApiMock'
+
+services:
+    App\Api\GameApiMock: ~
+    App\Api\GameApiInterface: '@App\Api\GameApiMock'
