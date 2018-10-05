@@ -20,8 +20,16 @@ class GameController extends AbstractController
      */
     public function index()
     {
-        return $this->render('game.html.twig', [
-            'game' => $this->gameApi->getGame()
-        ]);
+        $game = $this->gameApi->createGame();
+        return $this->render('game.html.twig', ['game' => $game]);
+    }
+
+    /**
+     * @Route("/rotate")
+     */
+    public function rotate()
+    {
+        $game = $this->gameApi->rotate($this->gameApi->createGame()); // just for testing
+        return $this->render('game.html.twig', ['game' => $game]);
     }
 }

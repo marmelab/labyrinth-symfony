@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const { createGame, handleEvent } = require('../src/game');
+const { EVENT, STATE } = require('../src/constants');
+
 const app = express();
 const PORT = 3000;
 
@@ -23,6 +26,15 @@ app.use(function(req, res, next) {
 app.get('/', (req, res) =>
     res.status(200).json({ msg: 'Welcome to Labyrinth API server' }),
 );
+
+app.get('/createGame', (req, res) => res.status(200).json(createGame()));
+
+app.get('/rotate', (req, res) => {
+    const game = req.body;
+    console.log(game);
+    // return res.status(200).json(handleEvent(game, EVENT.ROTATE));
+    return res.status(200).json(game);
+});
 
 app.get('/game', (req, res) => {
     const game = {

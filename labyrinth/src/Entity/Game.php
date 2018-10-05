@@ -10,21 +10,36 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
-    protected $board;
+    protected $jsonGame;
+    // protected $board;
 
-    public function __construct(array $board)
+    public function __construct(array $jsonGame)
     {
-        $this->board = $board;
+        $this->jsonGame = $jsonGame;
+        // $this->board = $jsonGame['board'];
+    }
+
+    public function getJsonGame() : array
+    {
+        return $this->jsonGame;
+    }
+
+    public function setJsonGame(array $jsonGame) : Game
+    {
+        $this->jsonGame = $jsonGame;
+        return $this;
     }
 
     public function getBoard() : array
     {
-        return $this->board;
+        // return $this->board;
+        return $this->jsonGame['board'];
     }
 
-    public function setBoard(array $board) : Game
+    public function setBoard(array $jsonBoard) : Game
     {
-        $this->board = $board;
+        // $this->board = $jsonBoard;
+        $this->jsonGame['board'] = $jsonBoard;
         return $this;
     }
 }
