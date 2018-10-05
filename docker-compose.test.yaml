@@ -1,0 +1,8 @@
+version: '3.2'
+
+services:
+    php:
+        env_file: ./labyrinth/.env.test
+
+    api:
+        command: 'node server/index.js'

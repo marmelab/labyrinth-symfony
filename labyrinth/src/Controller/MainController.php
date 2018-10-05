@@ -5,18 +5,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HelloController extends AbstractController
+class MainController extends AbstractController
 {
     /**
-     * @Route("/hello")
+     * @Route("/")
      */
     public function index()
     {
-        return $this->render('hello.html.twig');
-    }
-
-    public function sayHello(): string
-    {
-        return 'Hello World!';
+        return $this->render('base.html.twig');
     }
 }

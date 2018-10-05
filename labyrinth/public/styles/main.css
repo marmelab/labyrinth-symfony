@@ -1,0 +1,47 @@
+body {
+    font-family: Verdana, sans-serif, monospace;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: initial;
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.grid {
+    padding: 0px;
+    border-radius: 0px;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
+}
+
+.tile-image {
+    width: 100%;
+}
+
+table {
+    font-size: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+td {
+    padding: 0;
+}
+
+span.top {
+    margin-top: 100px;
+}

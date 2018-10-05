@@ -1,0 +1,6 @@
+parameters:
+    game_api: 'App\Api\GameApi'
+
+services:
+    App\Api\GameApi: ~
+    App\Api\GameApiInterface: '@App\Api\GameApi'
