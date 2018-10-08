@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Twig;
 
 use App\Twig\GameExtension;
@@ -30,31 +31,38 @@ class GameExtensionTest extends TestCase
         }
     }
 
-    public function testFromBoardReferentialToDisplay()
+    /**
+     * @dataProvider boardDisplayProvider
+     */
+    public function testFromBoardReferentialToDisplay($boardPosition, $displayPosition)
     {
         $gameExtension = new GameExtension();
+        $computedPosition = $gameExtension->fromBoardReferentialToDisplay($boardPosition);
+        $this->assertEquals($displayPosition, $computedPosition);
+    }
+
+    /**
+     * @dataProvider boardDisplayProvider
+     */
+    public function testFromDisplayReferentialToBoard($boardPosition, $displayPosition)
+    {
+        $gameExtension = new GameExtension();
+        $computedPosition = $gameExtension->fromDisplayReferentialToBoard($displayPosition);
+        $this->assertEquals($boardPosition, $computedPosition);
+    }
+
+    public function boardDisplayProvider()
+    {
         // board referential: 'y' is going upward from -1 to 7
         // display referential : 'y' is going downward from 1 to 9
-        $lowerLeftCorner = $gameExtension->fromBoardReferentialToDisplay([0,0]);
-        $upperLeftCorner = $gameExtension->fromBoardReferentialToDisplay([0,6]);
-        $lowerRightCorner = $gameExtension->fromBoardReferentialToDisplay([6,0]);
-        $upperRightCorner = $gameExtension->fromBoardReferentialToDisplay([6,6]);
-        $remainingPathCardPosition = $gameExtension->fromBoardReferentialToDisplay([1,-1]);
-
-        $this->assertEquals(2, $lowerLeftCorner[0]);
-        $this->assertEquals(8, $lowerLeftCorner[1]);
-
-        $this->assertEquals(2, $upperLeftCorner[0]);
-        $this->assertEquals(2, $upperLeftCorner[1]);
-
-        $this->assertEquals(8, $lowerRightCorner[0]);
-        $this->assertEquals(8, $lowerRightCorner[1]);
-
-        $this->assertEquals(8, $upperRightCorner[0]);
-        $this->assertEquals(2, $upperRightCorner[1]);
-
-        $this->assertEquals(3, $remainingPathCardPosition[0]);
-        $this->assertEquals(9, $remainingPathCardPosition[1]);
+        return [
+            'lowerLeftCorner' => [[0, 0], [2, 8]],
+            'upperLeftCorner' => [[0, 6], [2, 2]],
+            'lowerRightCorner' => [[6, 0], [8, 8]],
+            'upperRightCorner' => [[6, 6], [8, 2]],
+            'remainingPathCardPosition' => [[1, -1], [3, 9]],
+        ];
     }
+
 
 }
