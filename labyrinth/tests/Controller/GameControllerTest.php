@@ -16,8 +16,9 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            7 * 7 + 1, // +1 for remainingPathCard
-            $crawler->filter('.tile-grid')->count()
+            7 * 7 + 1, 
+            $crawler->filter('.tile-grid')->count(),
+            '7 x 7 + 1 for remainingPathCard'
         );
 
         $this->assertEquals(
@@ -26,8 +27,15 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            (7 * 7 + 1) * 3 * 3, // 7x7+1 cells, 3x3 images per cell
-            $crawler->filter('.tile-image')->count()
+            (7 * 7 + 1) * 3 * 3,
+            $crawler->filter('.tile-image')->count(),
+            '7x7+1 cells, 3x3 images per cell'
+        );
+
+        $this->assertEquals(
+            23,
+            $crawler->filter('.tile-asset.target')->count(),
+            '23 treasures on the board'
         );
     }
 }
