@@ -16,7 +16,7 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            7 * 7 + 1, 
+            7 * 7 + 1,
             $crawler->filter('.tile-grid')->count(),
             '7 x 7 + 1 for remainingPathCard'
         );
