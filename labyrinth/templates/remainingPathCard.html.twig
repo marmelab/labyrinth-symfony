@@ -1,4 +1,19 @@
+{% set insertPositions = [
+    [3,1],[5,1],[7,1],
+    [1,3],                  [9,3],
+    [1,5],                  [9,5],
+    [1,7],                  [9,7],
+    [3,9],[5,9],[7,9],
+] %}
+
 <div class="board-grid remainingPathCard">
+
+    {% for position in insertPositions %}
+        <a href="{{ path('rotateRemainingPathCard', {'x': position[0], 'y': position[1]}) }}" class="tile-grid empty"
+           style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}">
+        </a>
+    {% endfor %}
+
     {% include 'tile.html.twig' with {
         'tile' : remainingPathCard
     } only %}

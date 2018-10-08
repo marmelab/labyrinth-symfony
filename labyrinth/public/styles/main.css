@@ -17,13 +17,15 @@ a {
     grid-template-rows: repeat(9, 96px);
 }
 
-.board-grid.remainingPathCard:hover {
-    border: solid 1px white;
-}
-
-/*.tile-grid:hover {*/
+/*.board-grid.remainingPathCard:hover {*/
     /*border: solid 1px white;*/
+    /*background: red;*/
 /*}*/
+
+.tile-grid.empty:hover {
+    border: solid 1px white;
+    background: red;
+}
 
 .tile-grid {
     display: grid;
