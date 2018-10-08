@@ -2,13 +2,6 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-
-use App\Api\GameApi;
-use App\Controller\GameController;
 
 class GameControllerTest extends WebTestCase
 {
@@ -23,12 +16,17 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            7,
-            $crawler->filter('.grid-row')->count()
+            7 * 7 + 1, // +1 for remainingPathCard
+            $crawler->filter('.tile-grid')->count()
         );
 
         $this->assertEquals(
-            7 * 7 * 3 * 3, // 7x7 cells, 3x3 images per cell
+            1,
+            $crawler->filter('.player-grid')->count()
+        );
+
+        $this->assertEquals(
+            (7 * 7 + 1) * 3 * 3, // 7x7+1 cells, 3x3 images per cell
             $crawler->filter('.tile-image')->count()
         );
     }
