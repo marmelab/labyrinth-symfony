@@ -2,26 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { createGame, handleEvent } = require('../src/game');
-const { EVENT, STATE } = require('../src/constants');
+const { EVENT } = require('../src/constants');
 
 const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
-
-function handleError(res, reason, message, code) {
-    console.log('ERROR: ' + reason);
-    res.status(code || 500).json({ error: message });
-}
-
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept',
-    );
-    next();
-});
 
 app.get('/', (req, res) =>
     res.status(200).json({ msg: 'Welcome to Labyrinth API server' }),
