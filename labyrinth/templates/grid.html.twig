@@ -1,12 +1,9 @@
-<div class="grid">
+<div class="board-grid">
     {% for row in board %}
-        <div class="grid-row">
-            {% for tile in row %}
-                {% include 'tile.html.twig' with {
-                    'tile' : tile
-                }
-                    only %}
-            {% endfor %}
-        </div>
+        {% for tile in row %}
+            {% include 'tile.html.twig' with {
+                'tile' : tile
+            } only %}
+        {% endfor %}
     {% endfor %}
 </div>

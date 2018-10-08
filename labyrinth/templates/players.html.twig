@@ -1,0 +1,9 @@
+<div class="board-grid">
+    {% for player in players %}
+        {% set playerNumber = loop.index0 %}
+        {% include 'player.html.twig' with {
+            'player' : player,
+            'playerNumber': playerNumber
+        } only %}
+    {% endfor %}
+</div>
