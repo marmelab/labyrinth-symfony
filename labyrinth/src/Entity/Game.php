@@ -10,36 +10,58 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Game
 {
-    protected $jsonGame;
-    // protected $board;
+    protected $board;
+    protected $remainingPathCard;
+    protected $players;
+    protected $scores;
+    protected $currentIndexOfPathCardInsertionPosition;
+    protected $currentPlayerIndex;
+    protected $state;
 
     public function __construct(array $jsonGame)
     {
-        $this->jsonGame = $jsonGame;
-        // $this->board = $jsonGame['board'];
+        $this->board = $jsonGame['board'];
+        $this->remainingPathCard = $jsonGame['remainingPathCard'];
+        $this->players = $jsonGame['players'];
+        $this->scores = $jsonGame['scores'];
+        $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
+        $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
+        $this->state = $jsonGame['state'];
     }
 
-    public function getJsonGame() : array
+    public function getBoard(): array
     {
-        return $this->jsonGame;
+        return $this->board;
     }
 
-    public function setJsonGame(array $jsonGame) : Game
+    public function getRemainingPathCard(): array
     {
-        $this->jsonGame = $jsonGame;
-        return $this;
+        return $this->remainingPathCard;
     }
 
-    public function getBoard() : array
+    public function getPlayers(): array
     {
-        // return $this->board;
-        return $this->jsonGame['board'];
+        return $this->players;
     }
 
-    public function setBoard(array $jsonBoard) : Game
+    public function getScores(): array
     {
-        // $this->board = $jsonBoard;
-        $this->jsonGame['board'] = $jsonBoard;
-        return $this;
+        return $this->scores;
     }
+
+    public function getCurrentIndexOfPathCardInsertionPosition(): array
+    {
+        return $this->currentIndexOfPathCardInsertionPosition;
+    }
+
+    public function getCurrentPlayerIndex(): array
+    {
+        return $this->currentPlayerIndex;
+    }
+
+    public function getState(): array
+    {
+        return $this->state;
+    }
+
 }
