@@ -6,13 +6,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="board">
-        <div>
-            {% include 'grid.html.twig' with {
-                'board' : game.board
-            }
+    <div>
+        {% include 'grid.html.twig' with {
+            'board' : game.board,
+        }
             only %}
-        </div>
+    </div>
+
+    <div>
+        {% include 'players.html.twig' with {
+            'players' : game.players,
+        }
+            only %}
+    </div>
+
+    <div>
+        {% include 'remainingPathCard.html.twig' with {
+            'remainingPathCard' : game.remainingPathCard
+        }
+            only %}
     </div>
 
 {% endblock %}

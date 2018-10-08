@@ -1,0 +1,10 @@
+{% set position = fromBoardReferentialToDisplay([player.x,player.y]) %}
+
+<div class="player-grid"
+     style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}">
+    <div class="player"
+         style="grid-column: 2 ; grid-row: 2">
+        {% set fileName = "images/player" ~ playerNumber ~ ".png"%}
+        <img class="player-image" src={{ fileName }}/>
+    </div>
+</div>

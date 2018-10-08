@@ -6,5 +6,6 @@ use App\Entity\Game;
 
 interface GameApiInterface
 {
-    public function getGame() : Game;
+    public function createGame() : Game;
+    public function rotateRemainingPathCard(Game $game) : Game;
 }

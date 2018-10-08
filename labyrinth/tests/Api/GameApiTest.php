@@ -13,13 +13,13 @@ use GuzzleHttp\Psr7\Response;
 
 class GameApiTest extends TestCase
 {
-    public function testGetGame()
+    public function testCreateGame()
     {
         $mockedResponse = file_get_contents(__DIR__ . '/../../data/board-example.json');
         $client = $this->createGuzzleHttpMockClient($mockedResponse, 200, ['Content-Type' => 'application/json']);
         $gameApi = new GameApi($client);
 
-        $game = $gameApi->getGame();
+        $game = $gameApi->createGame();
 
         $numberOfRows = count($game->getBoard());
         $this->assertEquals(7, $numberOfRows);

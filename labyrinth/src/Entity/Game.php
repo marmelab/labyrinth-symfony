@@ -11,20 +11,57 @@ use Doctrine\ORM\Mapping as ORM;
 class Game
 {
     protected $board;
+    protected $remainingPathCard;
+    protected $players;
+    protected $scores;
+    protected $currentIndexOfPathCardInsertionPosition;
+    protected $currentPlayerIndex;
+    protected $state;
 
-    public function __construct(array $board)
+    public function __construct(array $jsonGame)
     {
-        $this->board = $board;
+        $this->board = $jsonGame['board'];
+        $this->remainingPathCard = $jsonGame['remainingPathCard'];
+        $this->players = $jsonGame['players'];
+        $this->scores = $jsonGame['scores'];
+        $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
+        $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
+        $this->state = $jsonGame['state'];
     }
 
-    public function getBoard() : array
+    public function getBoard(): array
     {
         return $this->board;
     }
 
-    public function setBoard(array $board) : Game
+    public function getRemainingPathCard(): array
     {
-        $this->board = $board;
-        return $this;
+        return $this->remainingPathCard;
     }
+
+    public function getPlayers(): array
+    {
+        return $this->players;
+    }
+
+    public function getScores(): array
+    {
+        return $this->scores;
+    }
+
+    public function getCurrentIndexOfPathCardInsertionPosition(): array
+    {
+        return $this->currentIndexOfPathCardInsertionPosition;
+    }
+
+    public function getCurrentPlayerIndex(): array
+    {
+        return $this->currentPlayerIndex;
+    }
+
+    public function getState(): array
+    {
+        return $this->state;
+    }
+
 }

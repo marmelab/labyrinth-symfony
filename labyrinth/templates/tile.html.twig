@@ -1,14 +1,18 @@
 {% set matrix = tileTypeToMatrix(tile.type) %}
 {% set degrees = tile.direction * 90 %}
-<table style="transform: rotate({{degrees}}deg)">
-    {% for raw in matrix %}
-        <tr>
+{% set position = fromBoardReferentialToDisplay([tile.x,tile.y]) %}
+
+<div class="tile-grid"
+     style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }};
+             transform: rotate({{ degrees }}deg)">
+        {% for raw in matrix %}
+            {% set y = loop.index0 %}
             {% for isWall in raw %}
+                {% set x = loop.index0 %}
                 {% set source = asset('images/' ~ (isWall ? 'bricks32' : 'stones32') ~ '.png') %}
-                <td>
-                    <img class="tile-image" src="{{source}}"/>
-                </td>
+                <div class="tile-asset" style="grid-column: {{ x+1 }} ; grid-row: {{ y+1 }}">
+                    <img class="tile-image" src="{{ source }}"/>
+                </div>
             {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+        {% endfor %}
+</div>
