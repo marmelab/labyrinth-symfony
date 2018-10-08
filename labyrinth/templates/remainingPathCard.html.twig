@@ -9,7 +9,7 @@
 <div class="board-grid remainingPathCard">
 
     {% for position in insertPositions %}
-        <a href="{{ path('rotateRemainingPathCard', {'x': position[0], 'y': position[1]}) }}" class="tile-grid empty"
+        <a href="{{ path('insertRemainingPathCard', {'x': position[0], 'y': position[1]}) }}" class="tile-grid empty"
            style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}">
         </a>
     {% endfor %}
