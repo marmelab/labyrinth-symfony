@@ -29,11 +29,10 @@ app.get('/', (req, res) =>
 
 app.get('/createGame', (req, res) => res.status(200).json(createGame()));
 
-app.get('/rotate', (req, res) => {
+app.post('/rotate', (req, res) => {
     const game = req.body;
     console.log(game);
-    // return res.status(200).json(handleEvent(game, EVENT.ROTATE));
-    return res.status(200).json(game);
+    return res.status(200).json(handleEvent(game, EVENT.ROTATE));
 });
 
 app.get('/game', (req, res) => {

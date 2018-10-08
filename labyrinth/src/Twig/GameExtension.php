@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
@@ -16,11 +17,11 @@ class GameExtension extends AbstractExtension
     public function tileTypeToMatrix($tileType)
     {
         if ($tileType === "┗") {
-            return [[1,0,1],[1,0,0],[1,1,1]];
+            return [[1, 0, 1], [1, 0, 0], [1, 1, 1]];
         } elseif ($tileType === "┻") {
-            return [[1,0,1],[0,0,0],[1,1,1]];
+            return [[1, 0, 1], [0, 0, 0], [1, 1, 1]];
         } elseif ($tileType === "┃") {
-            return [[1,0,1],[1,0,1],[1,0,1]];
+            return [[1, 0, 1], [1, 0, 1], [1, 0, 1]];
         }
     }
 }
