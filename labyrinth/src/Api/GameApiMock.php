@@ -15,7 +15,7 @@ class GameApiMock implements GameApiInterface
         return $game;
     }
 
-    public function rotate(Game $game) : Game
+    public function rotateRemainingPathCard(Game $game) : Game
     {
         return $game;
     }

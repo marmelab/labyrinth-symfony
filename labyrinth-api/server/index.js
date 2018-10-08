@@ -17,7 +17,6 @@ app.get('/createGame', (req, res) => res.status(200).json(createGame()));
 
 app.post('/rotate', (req, res) => {
     const game = req.body;
-    console.log(game);
     return res.status(200).json(handleEvent(game, EVENT.ROTATE));
 });
 

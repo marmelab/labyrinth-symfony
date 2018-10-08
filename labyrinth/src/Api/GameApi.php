@@ -23,7 +23,7 @@ class GameApi implements GameApiInterface
         return $game;
     }
 
-    public function rotate(Game $game): Game
+    public function rotateRemainingPathCard(Game $game): Game
     {
         $jsonGame = json_encode($game->getJsonGame());
         $response = $this->client->request('POST', '/rotate', [
