@@ -10,7 +10,7 @@ class GameApiMock implements GameApiInterface
     public function createGame() : Game
     {
         $mockedResponse = file_get_contents(__DIR__ . '/../../data/board-example.json');
-        $jsonGame = json_decode($mockedResponse, true); // true to get an array
+        $jsonGame = json_decode($mockedResponse, true);
         $game = new Game($jsonGame);
         return $game;
     }

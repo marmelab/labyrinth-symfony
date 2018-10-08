@@ -33,7 +33,7 @@ class GameApi implements GameApiInterface
             'body' => $jsonGame]);
 
         $jsonGame = json_decode($response->getBody()->getContents(), true);
-        $game = $game->setJsonGame($jsonGame);
+        $game = new Game($jsonGame);
         return $game;
     }
 }

@@ -11,6 +11,7 @@ class GameExtension extends AbstractExtension
     {
         return array(
             new TwigFunction('tileTypeToMatrix', array($this, 'tileTypeToMatrix')),
+            new TwigFunction('fromBoardReferentialToDisplay', array($this, 'fromBoardReferentialToDisplay')),
         );
     }
 
@@ -23,5 +24,14 @@ class GameExtension extends AbstractExtension
         } elseif ($tileType === "┃") {
             return [[1, 0, 1], [1, 0, 1], [1, 0, 1]];
         }
+    }
+
+    public function fromBoardReferentialToDisplay(array $position)
+    {
+        $x = $position[0];
+        $y = $position[1];
+        $newX = $x + 2; // +1 for remainingPath, +1 since display starts in 1
+        $newY = 9 - $y - 1; // -1 for remainingPath
+        return [$newX,$newY];
     }
 }
