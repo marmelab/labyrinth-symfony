@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Api\GameApiInterface;
 use App\Repository\GameRepository;
 
-
 class GameController extends AbstractController
 {
     private $gameApi;
@@ -20,33 +19,60 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/game")
+     * @Route("/createGame", name="createGame")
      */
-    public function index()
+    public function createGame()
     {
         $game = $this->gameApi->createGame();
-        $this->gameRepository->save($game);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($game);
+        $entityManager->flush();
+
+        $response = $this->redirectToRoute('game', array('idGame' => $game->getId()));
+        return $response;
+    }
+
+    /**
+     * @Route("/game/{idGame<\d+>}", name="game")
+     */
+    public function game(int $idGame)
+    {
+        $game = $this->gameRepository->findGameById($idGame);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($game);
+        $entityManager->flush();
 
         return $this->render('game.html.twig', ['game' => $game]);
     }
 
     /**
-     * @Route("/rotateRemainingPathCard", name="rotateRemainingPathCard")
+     * @Route("/rotateRemainingPathCard/{idGame<\d+>}", name="rotateRemainingPathCard")
      */
-    public function rotateRemainingPathCard()
+    public function rotateRemainingPathCard(int $idGame)
     {
-        // need to retrieve a game here: $this->gameRepository->findGameById($idGame);
-        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame());
+        $game = $this->gameRepository->findGameById($idGame);
+        $game = $this->gameApi->rotateRemainingPathCard($game);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($game);
+        $entityManager->flush();
+
         return $this->render('game.html.twig', ['game' => $game]);
     }
 
     /**
-     * @Route("/insertRemainingPathCard/{x<\d+>}/{y<\d+>}", name="insertRemainingPathCard")
+     * @Route("/insertRemainingPathCard/{idGame<\d+>}/{x<\d+>}/{y<\d+>}", name="insertRemainingPathCard")
      */
-    public function insertRemainingPathCard($x, $y)
+    public function insertRemainingPathCard(int $idGame, int $x, int $y)
     {
-        // need to retrieve a game here: $this->gameRepository->findGameById($idGame);
-        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame()); // not the right function
+        $game = $this->gameRepository->findGameById($idGame);
+        // TODO: call the correct function here
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($game);
+        $entityManager->flush();
         return $this->render('game.html.twig', ['game' => $game]);
     }
 }

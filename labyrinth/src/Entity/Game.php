@@ -54,13 +54,7 @@ class Game
 
     public function __construct(array $jsonGame)
     {
-        $this->board = $jsonGame['board'];
-        $this->remainingPathCard = $jsonGame['remainingPathCard'];
-        $this->players = $jsonGame['players'];
-        $this->scores = $jsonGame['scores'];
-        $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
-        $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
-        $this->state = $jsonGame['state'];
+        $this->setJsonGame($jsonGame);
     }
 
     public function getId(): int
@@ -101,6 +95,17 @@ class Game
     public function getState(): array
     {
         return $this->state;
+    }
+
+    public function setJsonGame($jsonGame)
+    {
+        $this->board = $jsonGame['board'];
+        $this->remainingPathCard = $jsonGame['remainingPathCard'];
+        $this->players = $jsonGame['players'];
+        $this->scores = $jsonGame['scores'];
+        $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
+        $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
+        $this->state = $jsonGame['state'];
     }
 
     public function toJson()
