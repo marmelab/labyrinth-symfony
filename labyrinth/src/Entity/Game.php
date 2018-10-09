@@ -97,6 +97,11 @@ class Game
         return $this->state;
     }
 
+    public function getCurrentPlayerScore(): int
+    {
+        return $this->scores[$this->getCurrentPlayerIndex()];
+    }
+
     public function setJsonGame($jsonGame)
     {
         $this->board = $jsonGame['board'];

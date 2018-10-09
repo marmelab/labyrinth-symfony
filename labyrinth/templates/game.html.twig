@@ -1,31 +1,37 @@
 {% extends "base.html.twig" %}
 {% block header %}
-    <div class="section">
-        <h1>Welcome to Labyrinth Game!</h1>
+    <div class="game-header">
+        <h3>Welcome to Labyrinth Game!</h3>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div>
-        {% include 'grid.html.twig' with {
-            'board' : game.board,
-        }
-            only %}
-    </div>
+    {% include 'invite.html.twig' with {
+        'idGame': game.getId(),
+        'playerScore': game.getCurrentPlayerScore()
+    }
+        only %}
 
-    <div>
-        {% include 'players.html.twig' with {
-            'players' : game.players,
-        }
-            only %}
-    </div>
+    {% include 'grid.html.twig' with {
+        'idGame': game.getId(),
+        'board' : game.board,
+    }
+        only %}
 
-    <div>
-        {% include 'remainingPathCard.html.twig' with {
-            'idGame': game.getId(),
-            'remainingPathCard' : game.remainingPathCard
-        }
-            only %}
-    </div>
+    {% include 'players.html.twig' with {
+        'players' : game.players,
+    }
+        only %}
 
+    {% include 'insertLayer.html.twig' with {
+        'idGame': game.getId(),
+        'remainingPathCard' : game.remainingPathCard
+    }
+        only %}
+
+    {% include 'remainingPathCard.html.twig' with {
+        'idGame': game.getId(),
+        'remainingPathCard' : game.remainingPathCard
+    }
+        only %}
 {% endblock %}
