@@ -10,3 +10,7 @@ services:
     api:
         ports:
             - '3000:3000'
+
+    postgres:
+        ports:
+        - '5433:5432'

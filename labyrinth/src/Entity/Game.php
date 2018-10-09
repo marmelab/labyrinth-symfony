@@ -82,17 +82,17 @@ class Game
         return $this->scores;
     }
 
-    public function getCurrentIndexOfPathCardInsertionPosition(): array
+    public function getCurrentIndexOfPathCardInsertionPosition(): int
     {
         return $this->currentIndexOfPathCardInsertionPosition;
     }
 
-    public function getCurrentPlayerIndex(): array
+    public function getCurrentPlayerIndex(): int
     {
         return $this->currentPlayerIndex;
     }
 
-    public function getState(): array
+    public function getState(): int
     {
         return $this->state;
     }

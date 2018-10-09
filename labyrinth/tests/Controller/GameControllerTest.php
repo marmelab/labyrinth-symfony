@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GameControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testCreateGame()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/game');
+        $client->followRedirects();
+        $crawler = $client->request('GET', '/createGame');
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
             0,
