@@ -15,12 +15,9 @@ a {
     display: grid;
     grid-template-columns: repeat(9, 96px);
     grid-template-rows: repeat(9, 96px);
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
 }
-
-/*.board-grid.remainingPathCard:hover {*/
-    /*border: solid 1px white;*/
-    /*background: red;*/
-/*}*/
 
 .tile-grid.empty:hover {
     border: solid 1px white;
@@ -39,6 +36,9 @@ a {
     grid-template-rows: repeat(3, 32px);
 }
 
+.target {
+    font-size: 1.5rem;
+}
 span.top {
     margin-top: 100px;
 }
