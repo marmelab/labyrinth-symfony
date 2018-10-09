@@ -9,12 +9,22 @@
 <div class="board-grid remainingPathCard">
 
     {% for position in insertPositions %}
-        <a href="{{ path('insertRemainingPathCard', {'x': position[0], 'y': position[1]}) }}" class="tile-grid empty"
-           style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}">
+        <a class="tile-grid empty"
+           style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}"
+           href="{{ path('insertRemainingPathCard', {'x': position[0], 'y': position[1]}) }}"
+        >
         </a>
     {% endfor %}
 
-    {% include 'tile.html.twig' with {
-        'tile' : remainingPathCard
-    } only %}
+    {% set position = fromBoardReferentialToDisplay([remainingPathCard.x,remainingPathCard.y]) %}
+    {% set degrees = remainingPathCard.direction * 90 %}
+
+    <a class="tile-grid remainingPathCard"
+       style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}; transform: rotate({{ degrees }}deg)"
+       href="{{ path('rotateRemainingPathCard') }}"
+    >
+        {% include 'tile.html.twig' with {
+            'tile' : remainingPathCard
+        } only %}
+    </a>
 </div>
