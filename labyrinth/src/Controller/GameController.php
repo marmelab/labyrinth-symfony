@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Api\GameApiInterface;
+use App\Repository\GameRepository;
+
 
 class GameController extends AbstractController
 {
     private $gameApi;
+    private $gameRepository;
 
-    public function __construct(GameApiInterface $gameApi)
+    public function __construct(GameApiInterface $gameApi, GameRepository $gameRepository)
     {
         $this->gameApi = $gameApi;
+        $this->gameRepository = $gameRepository;
     }
 
     /**
@@ -22,16 +25,18 @@ class GameController extends AbstractController
     public function index()
     {
         $game = $this->gameApi->createGame();
+        $this->gameRepository->save($game);
+
         return $this->render('game.html.twig', ['game' => $game]);
     }
 
     /**
-     * @Route("/rotateRemainingPathCard/{x<\d+>}/{y<\d+>}", name="rotateRemainingPathCard")
+     * @Route("/rotateRemainingPathCard", name="rotateRemainingPathCard")
      */
-    public function rotateRemainingPathCard($x, $y)
+    public function rotateRemainingPathCard()
     {
         // need to retrieve a game here: $this->gameRepository->findGameById($idGame);
-        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame(), $x, $y);
+        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame());
         return $this->render('game.html.twig', ['game' => $game]);
     }
 
@@ -41,7 +46,7 @@ class GameController extends AbstractController
     public function insertRemainingPathCard($x, $y)
     {
         // need to retrieve a game here: $this->gameRepository->findGameById($idGame);
-        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame(), $x, $y);
+        $game = $this->gameApi->rotateRemainingPathCard($this->gameApi->createGame()); // not the right function
         return $this->render('game.html.twig', ['game' => $game]);
     }
 }
