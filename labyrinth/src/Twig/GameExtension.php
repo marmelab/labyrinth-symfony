@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use App\Utils\GameUtils;
 
 class GameExtension extends AbstractExtension
 {
@@ -11,9 +12,8 @@ class GameExtension extends AbstractExtension
     {
         return array(
             new TwigFunction('tileTypeToMatrix', array($this, 'tileTypeToMatrix')),
-            new TwigFunction('fromBoardReferentialToDisplay', array($this, 'fromBoardReferentialToDisplay')),
-            new TwigFunction('fromDisplayReferentialToBoard', array($this, 'fromDisplayReferentialToBoard')),
-
+            new TwigFunction('fromBoardReferentialToDisplay', ['App\Utils\GameUtils', 'fromBoardReferentialToDisplay']),
+            new TwigFunction('fromDisplayReferentialToBoard', ['App\Utils\GameUtils', 'fromDisplayReferentialToBoard']),
         );
     }
 
@@ -28,21 +28,5 @@ class GameExtension extends AbstractExtension
         }
     }
 
-    public function fromBoardReferentialToDisplay(array $position)
-    {
-        $x = $position[0];
-        $y = $position[1];
-        $newX = $x + 2; // +1 for remainingPath, +1 since display starts in 1
-        $newY = 9 - $y - 1; // -1 for remainingPath
-        return [$newX,$newY];
-    }
 
-    public function fromDisplayReferentialToBoard(array $position)
-    {
-        $x = $position[0];
-        $y = $position[1];
-        $newX = $x - 2;
-        $newY = 9 - $y - 1;
-        return [$newX,$newY];
-    }
 }

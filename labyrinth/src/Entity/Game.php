@@ -102,6 +102,13 @@ class Game
         return $this->scores[$this->getCurrentPlayerIndex()];
     }
 
+    public function setRemainingPathCardAt($x, $y)
+    {
+        $this->remainingPathCard['x'] = $x;
+        $this->remainingPathCard['y'] = $y;
+        return $this;
+    }
+
     public function setJsonGame($jsonGame)
     {
         $this->board = $jsonGame['board'];
@@ -111,6 +118,8 @@ class Game
         $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
         $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
         $this->state = $jsonGame['state'];
+        return $this;
+
     }
 
     public function toJson()

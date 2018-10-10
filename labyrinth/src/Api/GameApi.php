@@ -4,6 +4,7 @@ namespace App\Api;
 
 use GuzzleHttp\Client;
 use App\Entity\Game;
+use App\Utils\GameUtils;
 
 class GameApi implements GameApiInterface
 {
@@ -26,7 +27,25 @@ class GameApi implements GameApiInterface
     {
         $jsonGame = json_encode($game->toJson());
 
-        $response = $this->client->request('POST', '/rotate', [
+        $response = $this->client->request('POST', '/rotateRemainingPathCard', [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => $jsonGame]);
+
+        $jsonGame = json_decode($response->getBody()->getContents(), true);
+        $game->setJsonGame($jsonGame);
+        return $game;
+    }
+
+    public function insertRemainingPathCard(Game $game, int $xDisplay, int $yDisplay): Game
+    {
+        [$x, $y] = GameUtils::fromDisplayReferentialToBoard([$xDisplay, $yDisplay]);
+        $game->setRemainingPathCardAt($x, $y);
+
+        $jsonGame = json_encode($game->toJson());
+
+        $response = $this->client->request('POST', '/insertRemainingPathCard', [
             'headers' => [
                 'Content-Type' => 'application/json'
             ],
