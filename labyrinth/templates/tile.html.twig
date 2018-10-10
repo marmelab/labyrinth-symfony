@@ -1,7 +1,4 @@
 {% set matrix = tileTypeToMatrix(tile.type) %}
-{% set treasures = ['💌','💣','🛍','📿','🔭','💎','💰','📜','🗿','🏺','🔫',
-    '🛡','💈','🛎','⌛','🌡','⛱','🎈','🎎','🎁','🔮','📷','🕯'] %}
-
 {% for row in matrix %}
     {% set y = loop.index0 %}
     {% for isWall in row %}
@@ -12,8 +9,8 @@
         </div>
     {% endfor %}
 {% endfor %}
-{% if tile.target %}
+{% if tile.target is not null %}
     <div class="tile-asset target" style="grid-column: {{ 2 }} ; grid-row: {{ 2 }}">
-        {{ treasures[tile.target - 1] }}
+        {{ treasures[tile.target] }}
     </div>
 {% endif %}

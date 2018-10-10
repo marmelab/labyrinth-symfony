@@ -193,6 +193,12 @@ describe('InitGame 1 player, 24 target cards', () => {
         const flattenArray = board.reduce((acc, val) => acc.concat(val), []);
         expect(flattenArray.filter(element => element)).toHaveLength(49);
     });
+
+    it('should contain 24 target path cards on board+remainingPathCard', () => {
+        const flattenArray = board.reduce((acc, val) => acc.concat(val), []);
+        flattenArray.push(remainingPathCard);
+        expect(flattenArray.filter(element => element.target !== null)).toHaveLength(24);
+    });
 });
 
 describe('InitGame 4 players, 24 target cards', () => {

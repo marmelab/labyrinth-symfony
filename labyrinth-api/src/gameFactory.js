@@ -134,12 +134,12 @@ const buildBoard = () => {
     return Object.freeze({ board: board, targetNumber: targetNumber });
 };
 
-const buildPathDeck = initialTargetNumber =>
+const buildPathDeck = numberOfTargetAlreadyOnBoard =>
     Object.freeze([
         ...Array.from({ length: 13 }, () => createPathCard({ type: Type.STRAIGHT })),
         ...Array.from({ length: 9 }, () => createPathCard({ type: Type.CORNER })),
-        ...Array.from({ length: 6 }, () => createPathCard({ type: Type.CORNER, target: initialTargetNumber++ })),
-        ...Array.from({ length: 6 }, () => createPathCard({ type: Type.CROSS, target: initialTargetNumber++ })),
+        ...Array.from({length: 6}, () => createPathCard({type: Type.CORNER, target: numberOfTargetAlreadyOnBoard++})),
+        ...Array.from({length: 6}, () => createPathCard({type: Type.CROSS, target: numberOfTargetAlreadyOnBoard++})),
     ]);
 
 const buildTargetDeck = maxTargetNumber =>

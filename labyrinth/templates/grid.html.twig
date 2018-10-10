@@ -7,7 +7,8 @@
                  style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }};
                          transform: rotate({{ degrees }}deg)">
                 {% include 'tile.html.twig' with {
-                    'tile' : tile
+                    'tile' : tile,
+                    'treasures': treasures
                 } only %}
             </div>
         {% endfor %}

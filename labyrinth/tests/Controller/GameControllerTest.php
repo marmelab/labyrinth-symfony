@@ -42,9 +42,9 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            23,
+            24,
             $crawler->filter('.tile-asset.target')->count(),
-            '23 treasures on the board'
+            '24 treasures on the board+remainingPathCard'
         );
     }
 }

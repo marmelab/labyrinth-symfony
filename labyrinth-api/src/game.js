@@ -41,7 +41,7 @@ const { EVENT, STATE } = require('./constants');
 const { initGame } = require('./gameFactory');
 
 const NB_PLAYER = 1;
-const NB_TARGET_CARD = 1; //24;
+const NB_TARGET_CARD = 24;
 
 const createGame = () => {
     let { board, players, remainingPathCard } = initGame(NB_PLAYER, NB_TARGET_CARD);

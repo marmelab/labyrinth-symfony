@@ -5,21 +5,29 @@
     </div>
 {% endblock %}
 
+
+
 {% block content %}
+    {% set treasures = ['💌','💣','🛍','📿','🔭','💎','💰','📜','🗿','🏺','🔫',
+        '🛡','💈','🛎','⌛','🌡','⛱','🎈','🎎','🎁','🔮','📷','🕯', '?'] %}
+
     {% include 'invite.html.twig' with {
         'idGame': game.getId(),
-        'playerScore': game.getCurrentPlayerScore()
+        'playerScore': game.getCurrentPlayerScore(),
+        'targetCardNumber' : game.getCurrentPlayerTargetCard(),
+        'treasures': treasures
     }
         only %}
 
     {% include 'grid.html.twig' with {
         'idGame': game.getId(),
         'board' : game.board,
+        'treasures': treasures
     }
         only %}
 
     {% include 'players.html.twig' with {
-        'players' : game.players,
+        'players' : game.players
     }
         only %}
 
