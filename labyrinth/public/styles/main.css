@@ -12,7 +12,11 @@ a {
 
 .game {
     display: grid;
-    grid-template-areas: "header header" "board  invite" "board  .  " "board  remaining";
+    grid-template-areas:
+            "header header"
+    "board  invite"
+    "board  .  "
+    "board  remaining";
     grid-template-rows: 50px 1fr 50px 1fr;
     grid-template-columns: 1fr 150px;
     position: absolute;
