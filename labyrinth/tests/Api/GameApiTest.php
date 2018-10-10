@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Tests\Api;
 
 use PHPUnit\Framework\TestCase;
 
 use App\Api\GameApi;
-use App\Entity\Game;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -26,6 +26,13 @@ class GameApiTest extends TestCase
         foreach ($game->getBoard() as $row) {
             $this->assertEquals(7, count($row));
         }
+
+        $this->assertNotNull($game->getRemainingPathCard());
+        $this->assertNotEmpty($game->getPlayers());
+        $this->assertNotEmpty($game->getScores());
+        $this->assertNotNull($game->getCurrentIndexOfPathCardInsertionPosition());
+        $this->assertNotNull($game->getCurrentPlayerIndex());
+        $this->assertNotNull($game->getState());
     }
 
     private function createGuzzleHttpMockClient($body, $status, $headers)

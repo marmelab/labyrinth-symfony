@@ -2,7 +2,6 @@
 
 namespace App\Api;
 
-use Symfony\Component\HttpFoundation\Response;
 use GuzzleHttp\Client;
 use App\Entity\Game;
 
@@ -25,7 +24,8 @@ class GameApi implements GameApiInterface
 
     public function rotateRemainingPathCard(Game $game): Game
     {
-        $jsonGame = json_encode($game->getJsonGame());
+        $jsonGame = json_encode($game->toJson());
+
         $response = $this->client->request('POST', '/rotate', [
             'headers' => [
                 'Content-Type' => 'application/json'
@@ -33,7 +33,7 @@ class GameApi implements GameApiInterface
             'body' => $jsonGame]);
 
         $jsonGame = json_decode($response->getBody()->getContents(), true);
-        $game = new Game($jsonGame);
+        $game->setJsonGame($jsonGame);
         return $game;
     }
 }

@@ -1,14 +1,17 @@
 <?php
+
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GameControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testCreateGame()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/game');
+        $client->followRedirects();
+        $crawler = $client->request('GET', '/createGame');
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(
             0,
@@ -16,9 +19,15 @@ class GameControllerTest extends WebTestCase
         );
 
         $this->assertEquals(
-            7 * 7 + 1,
-            $crawler->filter('.tile-grid')->count(),
-            '7 x 7 + 1 for remainingPathCard'
+            7 * 7,
+            $crawler->filter('.tile-grid.pathCard')->count(),
+            '7 x 7 path-cards on the board'
+        );
+
+        $this->assertEquals(
+            1,
+            $crawler->filter('.tile-grid.remainingPathCard')->count(),
+            '1 remaining path-cards'
         );
 
         $this->assertEquals(
