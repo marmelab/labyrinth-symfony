@@ -126,7 +126,7 @@ class Game
     {
         return json_encode($this->toJson());
     }
-
+    
     public function getCurrentPlayerScore(): int
     {
         return $this->scores[$this->getCurrentPlayerIndex()];
