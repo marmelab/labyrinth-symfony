@@ -9,10 +9,12 @@
 <div class="game-board remainingPathCard">
 
     {% for position in insertPositions %}
+        {% if isToInsertMode %}
         <a class="tile-grid empty"
            style="grid-column: {{ position[0] }} ; grid-row: {{ position[1] }}"
            href="{{ path('insertRemainingPathCard', {'idGame': idGame, 'x': position[0], 'y': position[1]}) }}"
         >
         </a>
+        {%  endif %}
     {% endfor %}
 </div>

@@ -430,5 +430,6 @@
     },
     "currentIndexOfPathCardInsertionPosition": 0,
     "currentPlayerIndex": 0,
-    "state": 0
+    "state": 0,
+    "reachablePositions": [[{"x": 1, "y": 1}],
 }

@@ -1,5 +1,5 @@
-const { produce } = require('immer');
-const { argv } = require('./commandLineArguments');
+const {produce} = require('immer');
+const {argv} = require('./commandLineArguments');
 
 const {
     getExitDirections,
@@ -36,30 +36,31 @@ const {
     renderGameOver,
 } = require('./rendering');
 
-const { EVENT, STATE } = require('./constants');
+const {EVENT, STATE} = require('./constants');
 
-const { initGame } = require('./gameFactory');
+const {initGame} = require('./gameFactory');
 
 const NB_PLAYER = 1;
 const NB_TARGET_CARD = 24;
 
 const createGame = () => {
-    let { board, players, remainingPathCard } = initGame(NB_PLAYER, NB_TARGET_CARD);
+    let {board, players, remainingPathCard} = initGame(NB_PLAYER, NB_TARGET_CARD);
     const currentIndexOfPathCardInsertionPosition = 0;
-    const { x, y } = PATH_CARD_INSERTION_POSITION[currentIndexOfPathCardInsertionPosition];
+    const {x, y} = PATH_CARD_INSERTION_POSITION[currentIndexOfPathCardInsertionPosition];
     const newBoard = produce(board, draft => {
         putCardOnBoard(draft, x, y, remainingPathCard);
     });
     const game = Object.freeze({
         board: newBoard,
-        players,
-        scores: Array.from({ length: players.length }, () => 0),
+        players: players,
+        scores: Array.from({length: players.length}, () => 0),
         remainingPathCard: movePathCardTo(remainingPathCard, x, y),
-        currentIndexOfPathCardInsertionPosition,
+        currentIndexOfPathCardInsertionPosition: currentIndexOfPathCardInsertionPosition,
         currentPlayerIndex: 0,
         state: STATE.TO_INSERT,
+        reachablePositions: Array.from({length: players.length}, () => []),
     });
-    return game;
+    return computeReachablePositions(game);
 };
 
 const handleEvent = (game, event) => {
@@ -113,11 +114,11 @@ const handleEvent = (game, event) => {
     return newGame;
 };
 
-const endOfGame = ({ players, currentPlayerIndex }) =>
+const endOfGame = ({players, currentPlayerIndex}) =>
     getNumberOfRemainingTargetCard(players[currentPlayerIndex]) === 0;
 
 const increasePlayerScoreIfOnTarget = game => {
-    const { board, players, scores, currentPlayerIndex } = game;
+    const {board, players, scores, currentPlayerIndex} = game;
     const player = players[currentPlayerIndex];
     const score = scores[currentPlayerIndex];
     const isTargetReached = isCurrentTargetReached(player, board);
@@ -130,10 +131,10 @@ const increasePlayerScoreIfOnTarget = game => {
 };
 
 const movePlayer = (game, direction, godMode = argv.godMode) => {
-    const { board, players, currentPlayerIndex } = game;
+    const {board, players, currentPlayerIndex} = game;
     const player = players[currentPlayerIndex];
-    const { x, y } = player;
-    const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
+    const {x, y} = player;
+    const {x: nextX, y: nextY} = getNextCoordinatesForAMove(x, y, direction);
     if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length) {
         if (godMode || getExitDirections(board[x][y]).includes(direction)) {
             const nextPathCard = board[nextX][nextY];
@@ -151,12 +152,56 @@ const movePlayer = (game, direction, godMode = argv.godMode) => {
     return game;
 };
 
+const computeReachablePositions = game => {
+    const newGame = produce(game, draft => {
+        draft.reachablePositions = game.reachablePositions.map((v, k) => {
+            const board = game.board;
+            const {x, y} = game.players[k];
+            console.log('x: ' + x + ' y:' + y);
+
+            const res = [];
+            const directions = Object.values(Direction);
+            directions.forEach(direction => {
+
+                const {x: nextX, y: nextY} = getNextCoordinatesForAMove(x, y, direction);
+                if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length &&
+                    getExitDirections(board[x][y]).includes(direction)) {
+                    console.log('nextX: ' + nextX + ' nextY: ' + nextY);
+                    console.log(board[nextX][nextY]);
+
+                    const nextPathCard = board[nextX][nextY];
+                    const nextPathCardEntranceDirections = getExitDirections(nextPathCard).map(rotateDirection(2));
+                    if (nextPathCardEntranceDirections.includes(direction)) {
+                        res.push({x: nextX, y: nextY});
+                    }
+                }
+            });
+            console.log(k, res);
+            return res;
+        })
+    });
+    console.log(newGame.reachablePositions);
+    return newGame;
+};
+
+const moveCurrentPlayerTo = (game, x, y) => {
+    const {players, currentPlayerIndex} = game;
+    const player = players[currentPlayerIndex];
+
+    console.log('moveCurrentPlayerTo: ' + JSON.stringify(game));
+    const newGame = produce(game, draft => {
+        draft.players[currentPlayerIndex] = movePlayerTo(player, x, y);
+    });
+    return computeReachablePositions(newGame);
+};
+
+
 const moveRemainingPathCard = (game, direction) => {
-    const { remainingPathCard, currentIndexOfPathCardInsertionPosition } = game;
+    const {remainingPathCard, currentIndexOfPathCardInsertionPosition} = game;
     const numberOfPosition = PATH_CARD_INSERTION_POSITION.length;
     const toAdd = direction === Direction.WEST ? 1 : -1;
     const newIndex = (numberOfPosition + currentIndexOfPathCardInsertionPosition + toAdd) % numberOfPosition;
-    const { x: newX, y: newY } = PATH_CARD_INSERTION_POSITION[newIndex];
+    const {x: newX, y: newY} = PATH_CARD_INSERTION_POSITION[newIndex];
     const newRemainingCard = movePathCardTo(remainingPathCard, newX, newY);
     return produce(game, draft => {
         draft.currentIndexOfPathCardInsertionPosition = newIndex;
@@ -178,13 +223,13 @@ const moveRemainingPathCardClockwise = game => moveRemainingPathCard(game, Direc
 const moveRemainingPathCardAntiClockwise = game => moveRemainingPathCard(game, Direction.WEST);
 
 const rotateRemainingPathCard = game => {
-    const { remainingPathCard } = game;
+    const {remainingPathCard} = game;
     const newRemainingPathCard = produce(remainingPathCard, draft => {
         draft.direction = (remainingPathCard.direction + 1) % 4;
     });
-    return produce(game, draft => {
+    return computeReachablePositions(produce(game, draft => {
         draft.remainingPathCard = newRemainingPathCard;
-    });
+    }));
 };
 
 const shiftColumnDown = (game, x) => {
@@ -251,10 +296,10 @@ const shiftRowRight = (game, y) => {
     });
 };
 
-const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
+const movePathCardAndPlayer = ({game, fromX, fromY, toX, toY}) =>
     produce(game, draft => {
         draft.board[toX][toY] = movePathCardTo(game.board[fromX][fromY], toX, toY);
-        const { players } = game;
+        const {players} = game;
         draft.players = moveAllPlayers({
             players,
             fromX,
@@ -264,8 +309,8 @@ const movePathCardAndPlayer = ({ game, fromX, fromY, toX, toY }) =>
         });
     });
 
-const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
-    const { players } = game;
+const doShift = ({game, shiftFunction, fromX, fromY, toX, toY, fixed}) => {
+    const {players} = game;
     const extractedPathCard = game.board[fromX][fromY];
 
     const newGame = shiftFunction(game, fixed);
@@ -288,13 +333,14 @@ const doShift = ({ game, shiftFunction, fromX, fromY, toX, toY, fixed }) => {
 
 const insertRemainingPathCard = game => {
     const {
-        remainingPathCard: { x, y },
+        remainingPathCard: {x, y},
     } = game;
-    return insertRemainingPathCardAt(game, x, y);
+    console.log('insertRemainingPathCard: ' + game)
+    return computeReachablePositions(insertRemainingPathCardAt(game, x, y));
 };
 
 const insertRemainingPathCardAt = (game, x, y) => {
-    if (!isInsertionPosition({ x, y })) {
+    if (!isInsertionPosition({x, y})) {
         return game;
     }
 
@@ -358,4 +404,5 @@ module.exports = {
     insertRemainingPathCard,
     insertRemainingPathCardAt,
     handleEvent,
+    moveCurrentPlayerTo
 };

@@ -15,7 +15,8 @@
         'idGame': game.getId(),
         'playerScore': game.getCurrentPlayerScore(),
         'targetCardNumber' : game.getCurrentPlayerTargetCard(),
-        'treasures': treasures
+        'treasures': treasures,
+        'state': game.getState()
     }
         only %}
 
@@ -31,11 +32,21 @@
     }
         only %}
 
-    {% include 'insertLayer.html.twig' with {
-        'idGame': game.getId(),
-        'remainingPathCard' : game.remainingPathCard
-    }
-        only %}
+    {% if game.isStateToInsert() %}
+        {% include 'insertLayer.html.twig' with {
+            'idGame': game.getId(),
+            'isToInsertMode': game.isStateToInsert(),
+            'remainingPathCard' : game.remainingPathCard
+        }
+            only %}
+    {% elseif game.isStateToMove() %}
+        {% include 'movePlayerLayer.html.twig' with {
+            'idGame': game.getId(),
+            'isToMoveMode': game.isStateToMove(),
+            'currentPlayerReachablePositions' : game.getCurrentPlayerReachablePositions()
+        }
+            only %}
+    {% endif %}
 
     {% include 'remainingPathCard.html.twig' with {
         'idGame': game.getId(),

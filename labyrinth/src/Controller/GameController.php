@@ -72,4 +72,18 @@ class GameController extends AbstractController
         $entityManager->flush();
         return $this->render('game.html.twig', ['game' => $updatedGame]);
     }
+
+    /**
+     * @Route("/movePlayerTo/{idGame<\d+>}/{x<\d+>}/{y<\d+>}", name="movePlayerTo")
+     */
+    public function movePlayerTo(int $idGame, int $x, int $y)
+    {
+        $game = $this->gameRepository->findGameById($idGame);
+        $updatedGame = $this->gameApi->movePlayerTo($game, $x, $y);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($updatedGame);
+        $entityManager->flush();
+        return $this->render('game.html.twig', ['game' => $updatedGame]);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Utils\GameUtils;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +53,11 @@ class Game
      */
     protected $state;
 
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    protected $reachablePositions;
+
     public function __construct(array $jsonGame)
     {
         $this->setJsonGame($jsonGame);
@@ -97,6 +103,11 @@ class Game
         return $this->state;
     }
 
+    public function getReachablePositions(): array
+    {
+        return $this->reachablePositions;
+    }
+
     public function setJsonGame($jsonGame)
     {
         $this->board = $jsonGame['board'];
@@ -106,6 +117,7 @@ class Game
         $this->currentIndexOfPathCardInsertionPosition = $jsonGame['currentIndexOfPathCardInsertionPosition'];
         $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
         $this->state = $jsonGame['state'];
+        $this->reachablePositions = $jsonGame['reachablePositions'];
         return $this;
     }
 
@@ -119,6 +131,7 @@ class Game
             'currentIndexOfPathCardInsertionPosition' => $this->currentIndexOfPathCardInsertionPosition,
             'currentPlayerIndex' => $this->currentPlayerIndex,
             'state' => $this->state,
+            'reachablePositions' => $this->reachablePositions,
         ];
     }
 
@@ -146,4 +159,19 @@ class Game
         return $this;
     }
 
+    public function isStateToInsert() {
+        return $this->getState() == 0;
+    }
+
+    public function isStateToMove() {
+        return $this->getState() == 1;
+    }
+
+    public function isStateEnd() {
+        return $this->getState() == 2;
+    }
+
+    public function getCurrentPlayerReachablePositions() {
+        return GameUtils::convertJsonBoardPositionsIntoDisplayPositions($this->reachablePositions[$this->getCurrentPlayerIndex()]);
+    }
 }
