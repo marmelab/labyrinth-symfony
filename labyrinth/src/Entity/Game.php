@@ -107,10 +107,9 @@ class Game
         $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
         $this->state = $jsonGame['state'];
         return $this;
-
     }
 
-    public function toJson()
+    private function toJson()
     {
         return [
             'board' => $this->board,

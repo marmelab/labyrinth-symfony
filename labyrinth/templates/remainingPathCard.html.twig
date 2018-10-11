@@ -6,7 +6,8 @@
        href="{{ path('rotateRemainingPathCard', { 'idGame': idGame }) }}"
     >
         {% include 'tile.html.twig' with {
-            'tile' : remainingPathCard
+            'tile' : remainingPathCard,
+            'treasures': treasures
         } only %}
     </a>
 </div>

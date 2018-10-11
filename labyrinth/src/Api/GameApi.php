@@ -26,9 +26,7 @@ class GameApi implements GameApiInterface
     public function rotateRemainingPathCard(Game $game): Game
     {
         $response = $this->client->request('POST', '/rotateRemainingPathCard', [
-            'headers' => [
-                'Content-Type' => 'application/json'
-            ],
+            'headers' => ['Content-Type' => 'application/json'],
             'body' => $game->toJsonString()
         ]);
 
@@ -43,9 +41,7 @@ class GameApi implements GameApiInterface
         $game->setRemainingPathCardAt($x, $y);
 
         $response = $this->client->request('POST', '/insertRemainingPathCard', [
-            'headers' => [
-                'Content-Type' => 'application/json'
-            ],
+            'headers' => ['Content-Type' => 'application/json'],
             'body' => $game->toJsonString()
         ]);
 

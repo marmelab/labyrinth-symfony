@@ -37,7 +37,8 @@
 
     {% include 'remainingPathCard.html.twig' with {
         'idGame': game.getId(),
-        'remainingPathCard' : game.remainingPathCard
+        'remainingPathCard' : game.remainingPathCard,
+        'treasures': treasures
     }
         only %}
 {% endblock %}
