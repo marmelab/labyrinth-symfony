@@ -134,4 +134,9 @@ class Game
             'state' => $this->state,
         ];
     }
+
+    public function toJsonString()
+    {
+        return json_encode($this->toJson());
+    }
 }
