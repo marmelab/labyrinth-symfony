@@ -1,8 +1,10 @@
 <div class="game-invite">
     <h4>Invite</h4>
+    Player: #{{ playerIndex }}
+    <br>
     Score: {{ playerScore }}
     <br>
     Target: {{ treasures[targetCardNumber] }}
     <br>
-    State: {{ state }}
+    <h3>{{ state==0? 'Insert Remaining PathCard' : 'Please move Player' }}</h3>
 </div>

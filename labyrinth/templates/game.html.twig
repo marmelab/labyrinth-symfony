@@ -13,6 +13,7 @@
 
     {% include 'invite.html.twig' with {
         'idGame': game.getId(),
+        'playerIndex': game.getCurrentPlayerIndex(),
         'playerScore': game.getCurrentPlayerScore(),
         'targetCardNumber' : game.getCurrentPlayerTargetCard(),
         'treasures': treasures,

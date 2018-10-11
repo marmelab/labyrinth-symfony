@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {produce} = require('immer');
-const {STATE} = require('../src/constants');
+const { produce } = require('immer');
+const { STATE } = require('../src/constants');
 
-const { createGame, rotateRemainingPathCard, insertRemainingPathCard, moveCurrentPlayerTo } = require('../src/game');
+const {
+    createGame, rotateRemainingPathCard, insertRemainingPathCard, moveCurrentPlayerTo, toNextPlayerTurn,
+    toEndState, toMoveState, toInsertState
+} = require('../src/game');
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +14,7 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 app.get('/', (req, res) =>
-    res.status(200).json({msg: 'Welcome to Labyrinth API server'}),
+    res.status(200).json({ msg: 'Welcome to Labyrinth API server' }),
 );
 
 app.get('/createGame', (req, res) => res.status(200).json(createGame()));
@@ -21,9 +24,7 @@ app.post('/rotateRemainingPathCard', (req, res) => {
     console.log("/rotateRemainingPathCard dir:" + game.remainingPathCard.direction);
 
     let newGame = rotateRemainingPathCard(game);
-    newGame = produce(newGame, draft => {
-        draft.state = STATE.TO_INSERT;
-    });
+    newGame = toInsertState(newGame);
     return res.status(200).json(newGame);
 });
 
@@ -32,11 +33,7 @@ app.post('/insertRemainingPathCard', (req, res) => {
     console.log("/insertRemainingPathCard x:" + game.remainingPathCard.x + ' y:' + game.remainingPathCard.y + ' state:' + game.state);
 
     let newGame = game.state === STATE.TO_INSERT ? insertRemainingPathCard(game) : game;
-    // let newGame = insertRemainingPathCard(game);
-
-    newGame = produce(newGame, draft => {
-        draft.state = STATE.TO_MOVE;
-    });
+    newGame = toMoveState(newGame);
     return res.status(200).json(newGame);
 });
 
@@ -47,13 +44,8 @@ app.post('/movePlayerTo/:x/:y', (req, res) => {
 
     console.log("/movePlayerTo x:" + x + ' y:' + y);
     let newGame = game.state === STATE.TO_MOVE ? moveCurrentPlayerTo(game, x, y) : game;
-    // let newGame = moveCurrentPlayerTo(game, x, y);
-
-
-
-    newGame = produce(newGame, draft => {
-        draft.state = STATE.TO_INSERT;
-    });
+    newGame = toNextPlayerTurn(newGame);
+    newGame = toInsertState(newGame);
     return res.status(200).json(newGame);
 });
 
