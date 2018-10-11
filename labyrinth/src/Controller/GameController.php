@@ -48,14 +48,8 @@ class GameController extends AbstractController
     public function rotateRemainingPathCard(int $idGame)
     {
         $game = $this->gameRepository->findGameById($idGame);
-
         $updatedGame = $this->gameApi->rotateRemainingPathCard($game);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($updatedGame);
-        $entityManager->flush();
-
-        return $this->render('game.html.twig', ['game' => $updatedGame]);
+        return $this->flushAndRedirect($idGame, $updatedGame);
     }
 
     /**
@@ -64,13 +58,8 @@ class GameController extends AbstractController
     public function insertRemainingPathCard(int $idGame, int $x, int $y)
     {
         $game = $this->gameRepository->findGameById($idGame);
-
         $updatedGame = $this->gameApi->insertRemainingPathCard($game, $x, $y);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($updatedGame);
-        $entityManager->flush();
-        return $this->render('game.html.twig', ['game' => $updatedGame]);
+        return $this->flushAndRedirect($idGame, $updatedGame);
     }
 
     /**
@@ -80,10 +69,17 @@ class GameController extends AbstractController
     {
         $game = $this->gameRepository->findGameById($idGame);
         $updatedGame = $this->gameApi->movePlayerTo($game, $x, $y);
+        return $this->flushAndRedirect($idGame, $updatedGame);
+    }
 
+    private function flushAndRedirect(int $idGame, $updatedGame)
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($updatedGame);
         $entityManager->flush();
-        return $this->render('game.html.twig', ['game' => $updatedGame]);
+
+        $response = $this->redirectToRoute('game', array('idGame' => $idGame));
+        return $response;
     }
+
 }

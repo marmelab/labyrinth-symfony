@@ -49,6 +49,8 @@ app.post('/movePlayerTo/:x/:y', (req, res) => {
     let newGame = game.state === STATE.TO_MOVE ? moveCurrentPlayerTo(game, x, y) : game;
     // let newGame = moveCurrentPlayerTo(game, x, y);
 
+
+
     newGame = produce(newGame, draft => {
         draft.state = STATE.TO_INSERT;
     });
