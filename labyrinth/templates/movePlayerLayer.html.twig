@@ -2,12 +2,7 @@
     {#{{ dump(currentPlayerReachablePositions) }}#}
 
     {% for displayPosition in currentPlayerReachablePositions %}
-        {% if isToMoveMode %}
-            {#{% set displayPosition = fromBoardReferentialToDisplay(boardPosition) %}#}
-            {#{% set boardPosition = fromDisplayReferentialToBoard(displayPosition) %}#}
-
-            {#{{ dump(displayPosition) }}#}
-
+        {% if isToMoveMode and gamePlayerIndex == playerIndex %}
             <a class="tile-grid empty"
                style="grid-column: {{ displayPosition[0] }} ; grid-row: {{ displayPosition[1] }}"
                href="{{ path('movePlayerTo', {'idGame': idGame, 'x': displayPosition[0], 'y': displayPosition[1]}) }}"
