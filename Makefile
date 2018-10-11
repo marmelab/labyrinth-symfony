@@ -45,6 +45,7 @@ test: ## Test the code
 	$(DOCKER_COMPOSE_TEST) run --rm php bin/console doctrine:schema:update --env=test --force
 	$(DOCKER_COMPOSE_TEST) run --rm php bin/phpunit tests
 
+
 connect-php: # Open bash session in php container as host user
 	$(DOCKER_COMPOSE) run --no-deps --rm php bash
 

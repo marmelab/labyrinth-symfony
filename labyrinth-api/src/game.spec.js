@@ -4,7 +4,7 @@ const { getCurrentTargetCard } = require('./player');
 
 const { PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard } = require('./board');
 
-const { movePlayer, createGame, insertRemainingPathCard } = require('./game');
+const {movePlayer, createGame, insertRemainingPathCard, insertRemainingPathCardAt, setRemainingPathCardAt} = require('./game');
 const deepEqual = require('deep-equal');
 
 describe('Game movePlayer', () => {
@@ -58,6 +58,18 @@ describe('create a game', () => {
 
     it('should be the board', () => {
         expect(board[1][-1]).toEqual(remainingPathCard);
+    });
+});
+
+describe('put remainingPathCard on the board', () => {
+    const game = createGame();
+    PATH_CARD_INSERTION_POSITION.forEach(position => {
+        const {x, y} = position;
+        const newGame = setRemainingPathCardAt(game, x, y);
+        it('should be in x,y', () => {
+            expect(newGame.remainingPathCard.x).toBe(x);
+            expect(newGame.remainingPathCard.y).toBe(y);
+        });
     });
 });
 
@@ -127,11 +139,37 @@ describe('insert a pathCard up and down', () => {
 describe('insert a pathCard into all possible positions', () => {
     const game = createGame();
     PATH_CARD_INSERTION_POSITION.forEach(position => {
-        const game1 = insertRemainingPathCard(game);
+        const {x, y} = position;
+        const newGame = setRemainingPathCardAt(game, x, y);
+
+        const game1 = insertRemainingPathCard(newGame);
         const game2 = insertRemainingPathCard(game1);
         it('should do the identity', () => {
-            expect(game.remainingPathCard).toEqual(game2.remainingPathCard);
-            expect(JSON.stringify(game)).toEqual(JSON.stringify(game2));
+            expect(newGame.remainingPathCard).toEqual(game2.remainingPathCard);
+            expect(JSON.stringify(newGame)).toEqual(JSON.stringify(game2));
+        });
+    });
+});
+
+describe('insert a pathCard into all possible absolute positions', () => {
+    const game = createGame();
+
+    PATH_CARD_INSERTION_POSITION.forEach(position => {
+        const {x: x1, y: y1} = position;
+        const game1 = insertRemainingPathCardAt(game, x1, y1);
+
+        const {x: x2, y: y2} = game1.remainingPathCard;
+        const game2 = insertRemainingPathCardAt(game1, x2, y2);
+
+        const {x: x3, y: y3} = game2.remainingPathCard;
+        const game3 = insertRemainingPathCardAt(game2, x3, y3);
+
+        it('should do the identity', () => {
+            expect(game2.remainingPathCard.x).toBe(x1);
+            expect(game2.remainingPathCard.y).toBe(y1);
+
+            expect(game1.remainingPathCard).toEqual(game3.remainingPathCard);
+            expect(JSON.stringify(game1)).toEqual(JSON.stringify(game3));
         });
     });
 });

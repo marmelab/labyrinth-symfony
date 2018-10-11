@@ -19,4 +19,10 @@ class GameApiMock implements GameApiInterface
     {
         return $game;
     }
+
+    public function insertRemainingPathCard(Game $game, int $xDisplay, int $yDisplay): Game
+    {
+        return $game;
+    }
+
 }

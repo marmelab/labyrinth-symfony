@@ -164,6 +164,15 @@ const moveRemainingPathCard = (game, direction) => {
     });
 };
 
+const setRemainingPathCardAt = (game, x, y) => {
+    const index = getIndexPosition({x, y});
+    const newRemainingCard = movePathCardTo(game.remainingPathCard, x, y);
+    return produce(game, draft => {
+        draft.currentIndexOfPathCardInsertionPosition = index;
+        draft.remainingPathCard = newRemainingCard;
+    });
+};
+
 const moveRemainingPathCardClockwise = game => moveRemainingPathCard(game, Direction.EAST);
 
 const moveRemainingPathCardAntiClockwise = game => moveRemainingPathCard(game, Direction.WEST);
@@ -281,14 +290,19 @@ const insertRemainingPathCard = game => {
     const {
         remainingPathCard: { x, y },
     } = game;
+    return insertRemainingPathCardAt(game, x, y);
+};
 
+const insertRemainingPathCardAt = (game, x, y) => {
     if (!isInsertionPosition({ x, y })) {
         return game;
     }
 
+    const newGame = setRemainingPathCardAt(game, x, y);
+
     if (x < 0) {
         return doShift({
-            game,
+            game: newGame,
             shiftFunction: shiftRowRight,
             fromX: 6,
             fromY: y,
@@ -299,7 +313,7 @@ const insertRemainingPathCard = game => {
     }
     if (x >= BOARD_SIZE) {
         return doShift({
-            game,
+            game: newGame,
             shiftFunction: shiftRowLeft,
             fromX: 0,
             fromY: y,
@@ -310,7 +324,7 @@ const insertRemainingPathCard = game => {
     }
     if (y < 0) {
         return doShift({
-            game,
+            game: newGame,
             shiftFunction: shiftColumnUp,
             fromX: x,
             fromY: 6,
@@ -321,7 +335,7 @@ const insertRemainingPathCard = game => {
     }
     if (y >= BOARD_SIZE) {
         return doShift({
-            game,
+            game: newGame,
             shiftFunction: shiftColumnDown,
             fromX: x,
             fromY: 0,
@@ -331,6 +345,7 @@ const insertRemainingPathCard = game => {
         });
     }
 };
+
 module.exports = {
     NB_PLAYER,
     NB_TARGET_CARD,
@@ -338,7 +353,9 @@ module.exports = {
     createGame,
     moveRemainingPathCardClockwise,
     moveRemainingPathCardAntiClockwise,
+    setRemainingPathCardAt,
     rotateRemainingPathCard,
     insertRemainingPathCard,
+    insertRemainingPathCardAt,
     handleEvent,
 };

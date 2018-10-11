@@ -50,6 +50,7 @@ class GameController extends AbstractController
         $game = $this->gameRepository->findGameById($idGame);
 
         $updatedGame = $this->gameApi->rotateRemainingPathCard($game);
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($updatedGame);
         $entityManager->flush();
@@ -64,8 +65,7 @@ class GameController extends AbstractController
     {
         $game = $this->gameRepository->findGameById($idGame);
 
-        // TODO: call the right function here
-        $updatedGame = $game;
+        $updatedGame = $this->gameApi->insertRemainingPathCard($game, $x, $y);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($updatedGame);

@@ -10,13 +10,40 @@ a {
     cursor: initial;
 }
 
-.board-grid {
+.game {
+    display: grid;
+    grid-template-areas:
+            "header header"
+    "board  invite"
+    "board  .  "
+    "board  remaining";
+    grid-template-rows: 50px 1fr 50px 1fr;
+    grid-template-columns: 1fr 150px;
     position: absolute;
+
+}
+
+.game .game-header {
+    grid-area: header;
+    background-color: #8ca0ff;
+}
+
+.game .game-board {
+    grid-area: board;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(9, 96px);
     grid-template-rows: repeat(9, 96px);
     grid-column-gap: 1px;
     grid-row-gap: 1px;
+}
+
+.game .game-invite {
+    grid-area: invite;
+}
+
+.game .game-remaining {
+    grid-area: remaining;
 }
 
 .tile-grid.empty:hover {
@@ -30,6 +57,10 @@ a {
     grid-template-rows: repeat(3, 32px);
 }
 
+.tile-grid .remainingPathCard {
+    justify-self: center
+}
+
 .player-grid {
     display: grid;
     grid-template-columns: repeat(3, 32px);
@@ -39,6 +70,7 @@ a {
 .target {
     font-size: 1.5rem;
 }
+
 span.top {
     margin-top: 100px;
 }

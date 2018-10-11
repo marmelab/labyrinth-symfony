@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { createGame, handleEvent } = require('../src/game');
-const { EVENT } = require('../src/constants');
+const {createGame, rotateRemainingPathCard, insertRemainingPathCard} = require('../src/game');
 
 const app = express();
 const PORT = 3000;
@@ -15,9 +14,14 @@ app.get('/', (req, res) =>
 
 app.get('/createGame', (req, res) => res.status(200).json(createGame()));
 
-app.post('/rotate', (req, res) => {
+app.post('/rotateRemainingPathCard', (req, res) => {
     const game = req.body;
-    return res.status(200).json(handleEvent(game, EVENT.ROTATE));
+    return res.status(200).json(rotateRemainingPathCard(game));
+});
+
+app.post('/insertRemainingPathCard', (req, res) => {
+    const game = req.body;
+    return res.status(200).json(insertRemainingPathCard(game));
 });
 
 app.get('/game', (req, res) => {
