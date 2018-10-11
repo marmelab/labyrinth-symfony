@@ -97,18 +97,6 @@ class Game
         return $this->state;
     }
 
-    public function getCurrentPlayerScore(): int
-    {
-        return $this->scores[$this->getCurrentPlayerIndex()];
-    }
-
-    public function setRemainingPathCardAt($x, $y)
-    {
-        $this->remainingPathCard['x'] = $x;
-        $this->remainingPathCard['y'] = $y;
-        return $this;
-    }
-
     public function setJsonGame($jsonGame)
     {
         $this->board = $jsonGame['board'];
@@ -119,10 +107,9 @@ class Game
         $this->currentPlayerIndex = $jsonGame['currentPlayerIndex'];
         $this->state = $jsonGame['state'];
         return $this;
-
     }
 
-    public function toJson()
+    private function toJson()
     {
         return [
             'board' => $this->board,
@@ -139,4 +126,24 @@ class Game
     {
         return json_encode($this->toJson());
     }
+
+    public function getCurrentPlayerScore(): int
+    {
+        return $this->scores[$this->getCurrentPlayerIndex()];
+    }
+
+    public function getCurrentPlayerTargetCard(): int
+    {
+        $targetCards = $this->players[$this->getCurrentPlayerIndex()]['targetCards'];
+        $lastCard = array_values(array_slice($targetCards, -1))[0];
+        return $lastCard['target'];
+    }
+
+    public function setRemainingPathCardAt($x, $y)
+    {
+        $this->remainingPathCard['x'] = $x;
+        $this->remainingPathCard['y'] = $y;
+        return $this;
+    }
+
 }

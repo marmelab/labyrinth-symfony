@@ -33,6 +33,21 @@ class GameApiTest extends TestCase
         $this->assertNotNull($game->getCurrentIndexOfPathCardInsertionPosition());
         $this->assertNotNull($game->getCurrentPlayerIndex());
         $this->assertNotNull($game->getState());
+
+        $nbTarget = 0;
+        foreach ($game->getBoard() as $row) {
+            foreach ($row as $pathCard) {
+                if (!is_null($pathCard['target'])) {
+                    $nbTarget = $nbTarget + 1;
+                }
+            }
+        }
+        $remainingPathCard = $game->getRemainingPathCard();
+        if (!is_null($remainingPathCard['target'])) {
+            $nbTarget = $nbTarget + 1;
+        }
+        $this->assertEquals(24, $nbTarget);
+
     }
 
     private function createGuzzleHttpMockClient($body, $status, $headers)

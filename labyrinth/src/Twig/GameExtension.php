@@ -28,5 +28,4 @@ class GameExtension extends AbstractExtension
         }
     }
 
-
 }
