@@ -40,7 +40,7 @@ const { EVENT, STATE } = require('./constants');
 
 const { initGame } = require('./gameFactory');
 
-const NB_PLAYER = 2;
+const NB_PLAYER = 1;
 const NB_TARGET_CARD = 24;
 
 const createGame = () => {
@@ -169,14 +169,9 @@ const computeAllReachablePositionsFromXY = (board, x, y) => {
     const result = [];
     const todo = [{ x, y }];
     while (todo.length > 0) {
-        console.log('todo: ', JSON.stringify(todo, null, 4));
-        console.log('result: ', JSON.stringify(result, null, 4));
-
         const position = todo.pop();
         result.push(position);
-        console.log('current position: ', JSON.stringify(position, null, 4));
         const nextPositions = computeImmediateReachablePositionsFromXY(board, position.x, position.y);
-        console.log('next positions: ', JSON.stringify(nextPositions, null, 4));
 
         nextPositions.forEach(position => {
             if (!positionIsIn(position, result) && !positionIsIn(position, todo)) {
@@ -194,7 +189,6 @@ const computeImmediateReachablePositionsFromXY = (board, x, y) => {
         const { x: nextX, y: nextY } = getNextCoordinatesForAMove(x, y, direction);
         if (nextX >= 0 && nextX < board.length && nextY >= 0 && nextY < board.length &&
             getExitDirections(board[x][y]).includes(direction)) {
-            console.log('board[nextX][nextY]: ', JSON.stringify(board[nextX][nextY], null, 4));
 
             const nextPathCard = board[nextX][nextY];
             const nextPathCardEntranceDirections = getExitDirections(nextPathCard).map(rotateDirection(2));
@@ -211,19 +205,15 @@ const computeReachablePositions = game => {
         draft.reachablePositions = game.reachablePositions.map((v, k) => {
             const board = game.board;
             const { x, y } = game.players[k];
-            console.log('x: ' + x + ' y:' + y);
             return computeAllReachablePositionsFromXY(board, x, y);
         })
     });
-    console.log('reachablePositions: ', JSON.stringify(newGame.reachablePositions, null, 4));
     return newGame;
 };
 
 const moveCurrentPlayerTo = (game, x, y) => {
     const { players, currentPlayerIndex } = game;
     const player = players[currentPlayerIndex];
-
-    console.log('moveCurrentPlayerTo: ' + JSON.stringify(game));
     const newGame = produce(game, draft => {
         draft.players[currentPlayerIndex] = movePlayerTo(player, x, y);
     });
@@ -370,7 +360,6 @@ const insertRemainingPathCard = game => {
     const {
         remainingPathCard: { x, y },
     } = game;
-    console.log('insertRemainingPathCard: ' + game)
     return computeReachablePositions(increasePlayerScoreIfOnTarget(insertRemainingPathCardAt(game, x, y)));
 };
 

@@ -29,9 +29,7 @@ class GameController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($game);
         $entityManager->flush();
-
         $session->set('playerIndex', 0);
-
         $response = $this->redirectToRoute('game', array('idGame' => $game->getId()));
 
         return $response;
@@ -55,7 +53,6 @@ class GameController extends AbstractController
     public function join(int $idGame, SessionInterface $session)
     {
         $session->set('playerIndex', 1);
-
         $response = $this->redirectToRoute('game', array('idGame' => $idGame));
         return $response;
     }

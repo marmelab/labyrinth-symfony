@@ -1,6 +1,4 @@
 <div class="game-board movePlayer">
-    {#{{ dump(currentPlayerReachablePositions) }}#}
-
     {% for displayPosition in currentPlayerReachablePositions %}
         {% if isToMoveMode and gamePlayerIndex == playerIndex %}
             <a class="tile-grid empty"
