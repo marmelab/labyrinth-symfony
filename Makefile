@@ -17,11 +17,12 @@ install-composer:
 install-postgres:
 	$(DOCKER_COMPOSE) up -d postgres
 	$(DOCKER_COMPOSE) run --no-deps --rm php \
-		bash -ci './bin/console doctrine:database:create --if-not-exists && ./bin/console doctrine:schema:update --force'
+		bash -ci '\
+		./bin/console doctrine:database:drop --force &&\
+		./bin/console doctrine:database:create --if-not-exists &&\
+	       	./bin/console doctrine:schema:update --force\
+		'
 	$(DOCKER_COMPOSE) down
-
-#	$(DOCKER_COMPOSE) exec postgres psql -f schema.sql labyrinth -U labyrinth
-#	$(DOCKER_COMPOSE) exec postgres createdb -U labyrinth labyrinth
 
 install-api:
 	$(DOCKER_COMPOSE) run --no-deps --rm api ash -ci 'npm install'

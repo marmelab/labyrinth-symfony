@@ -1,33 +1,42 @@
-const { Direction } = require('./pathCard');
+const {Direction} = require('./pathCard');
 
-const { getCurrentTargetCard } = require('./player');
+const {getCurrentTargetCard} = require('./player');
 
-const { PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard } = require('./board');
+const {PATH_CARD_INSERTION_POSITION, searchTargetCardInBoard} = require('./board');
 
-const {movePlayer, createGame, insertRemainingPathCard, insertRemainingPathCardAt, setRemainingPathCardAt} = require('./game');
+const {
+    movePlayer, createGame, insertRemainingPathCard, insertRemainingPathCardAt,
+    setRemainingPathCardAt
+} = require('./game');
 const deepEqual = require('deep-equal');
 
 describe('Game movePlayer', () => {
     const game = createGame();
 
-    const { board, players, scores, currentPlayerIndex } = game;
+    const {board, players, scores, currentPlayerIndex, reachablePositions} = game;
     const player = players[currentPlayerIndex];
     const score = scores[currentPlayerIndex];
+    const currentPlayerReachablePositions = reachablePositions[currentPlayerIndex];
 
     const targetCard = getCurrentTargetCard(player);
-    const { x: targetX, y: targetY } = searchTargetCardInBoard(board, targetCard);
-    const { x: playerX, y: playerY } = player;
+    const {x: targetX, y: targetY} = searchTargetCardInBoard(board, targetCard);
+    const {x: playerX, y: playerY} = player;
 
     it('should start with a null score', () => {
         expect(score).toBe(0);
     });
+
+    it('should start with a not null currentPlayerReachablePositions', () => {
+        expect(currentPlayerReachablePositions).not.toBeNull();
+    });
+
     it('should not be on the target', () => {
         expect(playerX === targetX && playerY === targetY).toBeFalsy();
     });
 
     it('should increase score when target is reached', () => {
         // TODO: add tests
-        let { x, y } = { x: playerX, y: playerY };
+        let {x, y} = {x: playerX, y: playerY};
         const godMode = true;
         let newScore = score;
         if (searchTargetCardInBoard(board, targetCard)) {
@@ -49,7 +58,7 @@ describe('Game movePlayer', () => {
 
 describe('create a game', () => {
     const game = createGame();
-    const { board, remainingPathCard } = game;
+    const {board, remainingPathCard} = game;
 
     it('should be in 1, -1', () => {
         expect(remainingPathCard.x).toBe(1);
@@ -75,8 +84,8 @@ describe('put remainingPathCard on the board', () => {
 
 describe('insert a pathCard into Board', () => {
     const game = createGame();
-    const { board: oldBoard, remainingPathCard } = game;
-    const { board: newBoard, remainingPathCard: newRemainingPathCard } = insertRemainingPathCard(game);
+    const {board: oldBoard, remainingPathCard} = game;
+    const {board: newBoard, remainingPathCard: newRemainingPathCard} = insertRemainingPathCard(game);
 
     it('should be in 1, -1', () => {
         expect(remainingPathCard.x).toBe(1);

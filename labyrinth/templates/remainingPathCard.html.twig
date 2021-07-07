@@ -1,13 +1,24 @@
 <div class="game-remaining">
     {% set position = fromBoardReferentialToDisplay([remainingPathCard.x,remainingPathCard.y]) %}
     {% set degrees = remainingPathCard.direction * 90 %}
-    <a class="tile-grid remainingPathCard"
-       style="transform: rotate({{ degrees }}deg)"
-       href="{{ path('rotateRemainingPathCard', { 'idGame': idGame }) }}"
-    >
-        {% include 'tile.html.twig' with {
-            'tile' : remainingPathCard,
-            'treasures': treasures
-        } only %}
-    </a>
+    {% if isToInsertMode and gamePlayerIndex == playerIndex %}
+        <a class="tile-grid remainingPathCard"
+           style="transform: rotate({{ degrees }}deg)"
+           href="{{ path('rotateRemainingPathCard', { 'idGame': idGame }) }}"
+        >
+            {% include 'tile.html.twig' with {
+                'tile' : remainingPathCard,
+                'treasures': treasures
+            } only %}
+        </a>
+    {% else %}
+        <div class="tile-grid remainingPathCard"
+             style="transform: rotate({{ degrees }}deg)"
+        >
+            {% include 'tile.html.twig' with {
+                'tile' : remainingPathCard,
+                'treasures': treasures
+            } only %}
+        </div>
+    {% endif %}
 </div>

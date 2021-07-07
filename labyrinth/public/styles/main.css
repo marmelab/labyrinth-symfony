@@ -12,15 +12,10 @@ a {
 
 .game {
     display: grid;
-    grid-template-areas:
-            "header header"
-    "board  invite"
-    "board  .  "
-    "board  remaining";
+    grid-template-areas: "header header" "board  invite" "board  .  " "board  remaining";
     grid-template-rows: 50px 1fr 50px 1fr;
     grid-template-columns: 1fr 150px;
     position: absolute;
-
 }
 
 .game .game-header {
@@ -48,7 +43,7 @@ a {
 
 .tile-grid.empty:hover {
     border: solid 1px white;
-    background: red;
+    background: rgba(255, 0, 0, .4);
 }
 
 .tile-grid {

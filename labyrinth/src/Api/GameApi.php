@@ -49,4 +49,18 @@ class GameApi implements GameApiInterface
         $game->setJsonGame($jsonGame);
         return $game;
     }
+
+    public function movePlayerTo(Game $game, int $xDisplay, int $yDisplay): Game
+    {
+        [$x, $y] = GameUtils::fromDisplayReferentialToBoard([$xDisplay, $yDisplay]);
+
+        $response = $this->client->request('POST', '/movePlayerTo/' . $x . '/' . $y, [
+            'headers' => ['Content-Type' => 'application/json'],
+            'body' => $game->toJsonString()
+        ]);
+
+        $jsonGame = json_decode($response->getBody()->getContents(), true);
+        $game->setJsonGame($jsonGame);
+        return $game;
+    }
 }

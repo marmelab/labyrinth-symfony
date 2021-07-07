@@ -25,4 +25,9 @@ class GameApiMock implements GameApiInterface
         return $game;
     }
 
+    public function movePlayerTo(Game $game, int $xDisplay, int $yDisplay): Game
+    {
+        return $game;
+    }
+
 }

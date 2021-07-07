@@ -11,4 +11,7 @@ interface GameApiInterface
     public function rotateRemainingPathCard(Game $game): Game;
 
     public function insertRemainingPathCard(Game $game, int $xDisplay, int $yDisplay): Game;
+
+    public function movePlayerTo(Game $game, int $xDisplay, int $yDisplay): Game;
+
 }

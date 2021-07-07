@@ -33,6 +33,11 @@ class GameApiTest extends TestCase
         $this->assertNotNull($game->getCurrentIndexOfPathCardInsertionPosition());
         $this->assertNotNull($game->getCurrentPlayerIndex());
         $this->assertNotNull($game->getState());
+        $this->assertNotEmpty($game->getReachablePositions());
+
+        $this->assertEquals(count($game->getPlayers()), count($game->getScores()));
+        $this->assertEquals(count($game->getPlayers()), count($game->getReachablePositions()));
+
 
         $nbTarget = 0;
         foreach ($game->getBoard() as $row) {

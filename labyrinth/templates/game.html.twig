@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 {% block header %}
     <div class="game-header">
-        <h3>Welcome to Labyrinth Game!</h3>
+        <h3>Player {{ playerIndex }} --- Welcome to Labyrinth Game!</h3>
     </div>
 {% endblock %}
 
@@ -11,14 +11,16 @@
 
     {% include 'invite.html.twig' with {
         'idGame': game.getId(),
+        'playerIndex': playerIndex,
+        'gamePlayerIndex': game.getCurrentPlayerIndex(),
         'playerScore': game.getCurrentPlayerScore(),
         'targetCardNumber' : game.getCurrentPlayerTargetCard(),
-        'treasures': treasures
+        'treasures': treasures,
+        'state': game.getState()
     }
         only %}
 
     {% include 'grid.html.twig' with {
-        'idGame': game.getId(),
         'board' : game.board,
         'treasures': treasures
     }
@@ -29,14 +31,31 @@
     }
         only %}
 
-    {% include 'insertLayer.html.twig' with {
-        'idGame': game.getId(),
-        'remainingPathCard' : game.remainingPathCard
-    }
-        only %}
+    {% if game.isStateToInsert() %}
+        {% include 'insertLayer.html.twig' with {
+            'idGame': game.getId(),
+            'playerIndex': playerIndex,
+            'gamePlayerIndex': game.getCurrentPlayerIndex(),
+            'isToInsertMode': game.isStateToInsert(),
+            'remainingPathCard' : game.remainingPathCard
+        }
+            only %}
+    {% elseif game.isStateToMove() %}
+        {% include 'movePlayerLayer.html.twig' with {
+            'idGame': game.getId(),
+            'playerIndex': playerIndex,
+            'gamePlayerIndex': game.getCurrentPlayerIndex(),
+            'isToMoveMode': game.isStateToMove(),
+            'currentPlayerReachablePositions' : game.getCurrentPlayerReachablePositions()
+        }
+            only %}
+    {% endif %}
 
     {% include 'remainingPathCard.html.twig' with {
         'idGame': game.getId(),
+        'playerIndex': playerIndex,
+        'gamePlayerIndex': game.getCurrentPlayerIndex(),
+        'isToInsertMode': game.isStateToInsert(),
         'remainingPathCard' : game.remainingPathCard,
         'treasures': treasures
     }

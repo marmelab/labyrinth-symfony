@@ -21,4 +21,14 @@ class GameUtils
         $newY = 9 - $y - 1;
         return [$newX, $newY];
     }
+
+    public static function convertJsonBoardPositionsIntoDisplayPositions(array $jsonPositions)
+    {
+        $displayPositions = array();
+        foreach ($jsonPositions as $jsonPosition) {
+            [$xDisplay, $yDisplay] = GameUtils::fromBoardReferentialToDisplay([$jsonPosition['x'], $jsonPosition['y']]);
+            $displayPositions[] = [$xDisplay, $yDisplay];
+        }
+        return $displayPositions;
+    }
 }

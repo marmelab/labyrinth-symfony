@@ -41,6 +41,7 @@ function getNextCoordinatesForAMove(x, y, direction) {
         case Direction.WEST:
             return { x: x - 1, y: y };
     }
+    return null;
 }
 
 const rotateDirection = numberOfQuaters => direction => (4 + direction + numberOfQuaters) % 4;
